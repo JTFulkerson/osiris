@@ -181,18 +181,18 @@ export const API_GROUPS: ApiGroup[] = [
       {
         path: '/api/conflicts',
         method: 'GET',
-        summary: 'Active conflict zones joined with live incident reporting.',
+        summary: 'A curated list of conflict zones, each with the recent world-news headlines that mention it.',
         returns: [
           'zones',
           'activeWarzones',
-          'liveEvents',
           'totalZones',
-          'totalLiveEvents',
+          'totalHeadlines',
+          'zoneSource',
           'sources',
           'refreshInterval',
           'timestamp',
         ],
-        notes: '`refreshInterval` is the server’s recommended client poll interval in milliseconds — honour it rather than hard-coding your own.',
+        notes: 'Zones and their severity are kept by hand (`zoneSource: "curated"`), so `activeWarzones` counts ratings, not live events. Each zone’s `headlines` are news items that name it; they carry no coordinates. `refreshInterval` is the server’s recommended client poll interval in seconds — honour it rather than hard-coding your own.',
       },
       {
         path: '/api/frontlines',

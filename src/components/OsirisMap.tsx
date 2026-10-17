@@ -1411,14 +1411,20 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
       const p = e.features[0].properties as any;
       const coords = (e.features[0].geometry as any).coordinates;
       const color = p.severity === 'war' ? '#FF1744' : p.severity === 'high' ? '#FF9500' : '#FFD500';
+      let headlines: { title?: string; url?: string; source?: string }[] = [];
+      try { headlines = JSON.parse(p.headlines || '[]'); } catch { /* none */ }
+      const count = Number(p.headlineCount) || 0;
+      const headlineList = headlines.map(h => `<a href="${urlSafe(h.url)}" target="_blank" rel="noopener noreferrer" style="display:block;color:#C9C5BC;text-decoration:none;font-size:10px;line-height:1.35;margin-top:5px;">${htmlEsc(h.title)} <span style="color:#5C5A54;">· ${htmlEsc(h.source)}</span></a>`).join('');
       popup(coords, `<div style="${pStyle}border:1px solid ${color}40;">
-        <div style="color:${color};font-size:12px;font-weight:700;margin-bottom:6px;">⚠️ ${htmlEsc(p.label || 'WARNING EVENT')}</div>
-        <div style="font-size:10px;color:#E8E6E0;margin-bottom:8px;line-height:1.4;">${htmlEsc(p.description || 'Global event detected at this location.')}</div>
+        <div style="color:${color};font-size:12px;font-weight:700;margin-bottom:6px;">⚠️ ${htmlEsc(p.label || 'CONFLICT ZONE')}</div>
+        <div style="font-size:10px;color:#E8E6E0;margin-bottom:8px;line-height:1.4;">${htmlEsc(p.description || '')}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9px;margin-bottom:8px;">
           <div><span style="color:#5C5A54;">SEVERITY</span><br/><span style="color:${color};">${(p.severity||'unknown').toUpperCase()}</span></div>
-          <div><span style="color:#5C5A54;">COORDS</span><br/><span style="color:#E8E6E0;">${coords[1].toFixed(3)}°, ${coords[0].toFixed(3)}°</span></div>
+          <div><span style="color:#5C5A54;">IN THE NEWS</span><br/><span style="color:#E8E6E0;">${count} headline${count === 1 ? '' : 's'}</span></div>
         </div>
-        ${p.sourceUrl ? `<a href="${urlSafe(p.sourceUrl)}" target="_blank" style="${linkStyle}flex:1;text-align:center;color:${color};border:1px solid ${color}40;background:${color}15;display:inline-block;width:100%;box-sizing:border-box;margin-top:4px;">[ OPEN SOURCE ↗ ]</a>` : ''}
+        ${headlineList ? `<div style="padding-top:6px;border-top:1px solid rgba(255,255,255,0.06);margin-bottom:8px;"><div style="font-size:8.5px;letter-spacing:0.14em;color:#5C5A54;">HEADLINES THAT MENTION IT</div>${headlineList}</div>` : ''}
+        <div style="font-size:8.5px;color:#5C5A54;line-height:1.4;margin-bottom:6px;">The zone and its severity come from a list OSIRIS keeps by hand, not from a live measurement.</div>
+        ${p.sourceUrl ? `<a href="${urlSafe(p.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="${linkStyle}flex:1;text-align:center;color:${color};border:1px solid ${color}40;background:${color}15;display:inline-block;width:100%;box-sizing:border-box;margin-top:4px;">[ OPEN SOURCE ↗ ]</a>` : ''}
       </div>`);
     });
 
@@ -2357,34 +2363,24 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
         const conflictData = await res.json();
         if (cancelled) return;
 
-        // Zone anchor markers (war/high/elevated labels)
+        /* One marker per zone. The headlines that mention a zone are listed in
+           its popup, not plotted: a headline names a place, not where on the
+           map something happened. */
         const zoneFeatures = (conflictData.zones || []).map((z: any) => ({
           type: 'Feature' as const,
           geometry: { type: 'Point' as const, coordinates: [z.lng, z.lat] },
-          properties: { 
-            label: z.label, 
-            severity: z.severity, 
-            description: `${z.description}${z.eventCount > 0 ? ` [${z.eventCount} live events detected]` : ''}`,
+          properties: {
+            label: z.label,
+            severity: z.severity,
+            description: z.description,
             sourceUrl: z.sourceUrl,
-            eventCount: z.eventCount,
+            headlineCount: z.headlineCount ?? 0,
+            // Feature properties come back flat, so the list travels as JSON.
+            headlines: JSON.stringify((z.headlines || []).slice(0, 4)),
           },
         }));
 
-        // Individual live conflict events (scatter dots across conflict zones)
-        const eventFeatures = (conflictData.liveEvents || [])
-          .filter((e: any) => e.lat && e.lng)
-          .map((e: any) => ({
-            type: 'Feature' as const,
-            geometry: { type: 'Point' as const, coordinates: [e.lng, e.lat] },
-            properties: { 
-              label: (e.title || 'CONFLICT EVENT').substring(0, 60).toUpperCase(),
-              severity: 'war',
-              description: e.title || 'Live conflict event detected by GDELT.',
-              sourceUrl: e.url || '',
-            },
-          }));
-
-        setGeo('conflict-zones', [...zoneFeatures, ...eventFeatures]);
+        setGeo('conflict-zones', zoneFeatures);
       } catch (e) {
         // Fallback: if API fails, use minimal known zones
         const FALLBACK_ZONES = [
