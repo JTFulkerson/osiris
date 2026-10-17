@@ -10,10 +10,10 @@ import IntelFeed from '@/components/IntelFeed';
 import MarketsPanel from '@/components/MarketsPanel';
 import ScmPanel from '@/components/ScmPanel';
 import SearchBar from '@/components/SearchBar';
-import DirectionsBar, { type RouteResult, type LiveLocation } from '@/components/DirectionsBar';
+import DirectionsBar, { type RouteResult, type LiveLocation, type TripPlan } from '@/components/DirectionsBar';
 import NavigationView from '@/components/NavigationView';
 import FlightWatchPanel, { type WatchedFlight, type FlightTelemetry, type AircraftDetail, type Airport } from '@/components/FlightWatchPanel';
-import type { NavProgress } from '@/lib/navigation';
+import { stopsAhead, type NavProgress } from '@/lib/navigation';
 import type { LiveDetection } from '@/lib/malware-intel';
 import ScaleBar from '@/components/ScaleBar';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -249,7 +249,7 @@ export default function Dashboard() {
   const [liveLocation, setLiveLocation] = useState<LiveLocation | null>(null);
   const [followUser, setFollowUser] = useState(false);
   const [navSession, setNavSession] = useState<
-    { route: RouteResult; label: string; key: number } | null
+    { route: RouteResult; label: string; key: number; plan: TripPlan } | null
   >(null);
   const [navProgress, setNavProgress] = useState<NavProgress | null>(null);
   const [watchedFlights, setWatchedFlights] = useState<WatchedFlight[]>([]);
@@ -1625,15 +1625,21 @@ export default function Dashboard() {
               onRecenter={() => setFollowUser(true)}
               onExit={() => { setNavSession(null); setNavProgress(null); setFollowUser(false); }}
               onReroute={async (fromPt) => {
-                // Re-plan from where the driver actually is, to the same destination.
-                const dest = navSession.route.geometry.coordinates.at(-1)!;
+                /* Re-plan from where the traveller actually is, to the same
+                   destination, the way the trip was planned: same mode (a walk
+                   stays a walk), same avoid options, and the stops not yet passed. */
+                const { route, plan } = navSession;
+                const dest = route.geometry.coordinates.at(-1)!;
+                const ahead = stopsAhead(route.geometry.coordinates, plan.stops, fromPt);
+                const via = ahead.length ? `&via=${ahead.map((p) => `${p.lat},${p.lng}`).join('|')}` : '';
+                const avoid = plan.avoid.length ? `&avoid=${plan.avoid.join(',')}` : '';
                 try {
                   const res = await fetch(
-                    `/api/directions?from=${fromPt.lat},${fromPt.lng}&to=${dest[1]},${dest[0]}&mode=auto`,
+                    `/api/directions?from=${fromPt.lat},${fromPt.lng}&to=${dest[1]},${dest[0]}&mode=${encodeURIComponent(route.mode)}${via}${avoid}`,
                   );
                   const data = await res.json();
                   if (res.ok && !data.error) {
-                    setNavSession((n) => (n ? { ...n, route: data, key: Date.now() } : n));
+                    setNavSession((n) => (n ? { ...n, route: data, key: Date.now(), plan: { ...n.plan, stops: ahead } } : n));
                     setActiveRoute({ ...data, from: fromPt, to: { lat: dest[1], lng: dest[0] } });
                   }
                 } catch { /* keep the old route rather than dropping guidance */ }
@@ -1660,8 +1666,8 @@ export default function Dashboard() {
               onLiveLocation={setLiveLocation}
               onFollowChange={setFollowUser}
               onActiveSegment={(seg) => setActiveRoute((r) => (r ? { ...r, activeSegment: seg } : r))}
-              onStartNavigation={(r, label) => {
-                setNavSession({ route: r, label, key: Date.now() });
+              onStartNavigation={(r, label, plan) => {
+                setNavSession({ route: r, label, key: Date.now(), plan });
                 setFollowUser(true);
               }}
               onLocate={(lat, lng, zoom) => setFlyToLocation({ lat, lng, zoom, ts: Date.now() })}
