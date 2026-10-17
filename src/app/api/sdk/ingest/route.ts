@@ -49,43 +49,64 @@ const reply = (status: number, accepted: number, rejected: number, errors: strin
 
 const isCoord = (v: unknown, limit: number) => typeof v === 'number' && Number.isFinite(v) && Math.abs(v) <= limit;
 
+/** One entity as an external platform pushes it; nothing in it is trusted yet. */
+interface PushedEntity {
+  id?: string | number;
+  name?: string;
+  domain?: string;
+  entityType?: string;
+  position?: { lat?: unknown; lng?: unknown; alt?: number; heading?: number; speed?: number };
+  threat?: string;
+  classification?: string;
+  confidence?: number;
+  timestamp?: string;
+  properties?: Record<string, unknown>;
+  display?: Record<string, unknown>;
+}
+
+type StoredEntity = ReturnType<typeof toStored>;
+
 /** The stored form of one pushed entity, or why it was refused. */
-function normalize(source: string, entity: any): { ok: true; value: any } | { ok: false; error: string } {
+function normalize(source: string, input: unknown): { ok: true; value: StoredEntity } | { ok: false; error: string } {
+  const entity = input && typeof input === 'object' ? (input as PushedEntity) : null;
   // 0 is a real latitude and longitude, so the check is for a number, not for truthiness.
-  if (!entity || typeof entity !== 'object' || !entity.id || !isCoord(entity.position?.lat, 90) || !isCoord(entity.position?.lng, 180)) {
+  if (!entity || !entity.id || !isCoord(entity.position?.lat, 90) || !isCoord(entity.position?.lng, 180)) {
     return { ok: false, error: `Entity missing required fields (id, position.lat, position.lng): ${entity?.id || 'unknown'}` };
   }
+  return { ok: true, value: toStored(source, entity as Located) };
+}
+
+type Located = PushedEntity & { id: string | number; position: { lat: number; lng: number } };
+
+function toStored(source: string, entity: Located) {
   return {
-    ok: true,
-    value: {
-      id: `ext-${source}-${entity.id}`,
-      name: entity.name || `ENTITY-${entity.id}`,
-      domain: entity.domain || 'LAND',
-      entityType: entity.entityType || 'TRACK',
-      position: {
-        lat: entity.position.lat,
-        lng: entity.position.lng,
-        alt: entity.position.alt,
-        heading: entity.position.heading,
-        speed: entity.position.speed,
-      },
-      threat: entity.threat || 'NONE',
-      classification: entity.classification || 'UNCLASSIFIED',
-      source: {
-        provider: source,
-        feed: 'ingest-api',
-        originalId: entity.id,
-        confidence: entity.confidence || 0.8,
-      },
-      timestamp: entity.timestamp || new Date().toISOString(),
-      properties: entity.properties || {},
-      display: entity.display || {
-        color: '#D4AF37',
-        icon: 'dot-gold',
-        layerType: 'circle',
-        glow: false,
-        scale: 1.0,
-      },
+    id: `ext-${source}-${entity.id}`,
+    name: entity.name || `ENTITY-${entity.id}`,
+    domain: entity.domain || 'LAND',
+    entityType: entity.entityType || 'TRACK',
+    position: {
+      lat: entity.position.lat,
+      lng: entity.position.lng,
+      alt: entity.position.alt,
+      heading: entity.position.heading,
+      speed: entity.position.speed,
+    },
+    threat: entity.threat || 'NONE',
+    classification: entity.classification || 'UNCLASSIFIED',
+    source: {
+      provider: source,
+      feed: 'ingest-api',
+      originalId: entity.id,
+      confidence: entity.confidence || 0.8,
+    },
+    timestamp: entity.timestamp || new Date().toISOString(),
+    properties: entity.properties || {},
+    display: entity.display || {
+      color: '#D4AF37',
+      icon: 'dot-gold',
+      layerType: 'circle',
+      glow: false,
+      scale: 1.0,
     },
   };
 }
@@ -99,7 +120,7 @@ export async function POST(request: NextRequest) {
     if (raw.length > MAX_BODY_BYTES) {
       return reply(413, 0, 0, [`Payload larger than ${MAX_BODY_BYTES} bytes`]);
     }
-    let body: any;
+    let body: { source?: unknown; apiKey?: unknown; entities?: unknown } | null;
     try {
       body = JSON.parse(raw);
     } catch {
@@ -126,7 +147,7 @@ export async function POST(request: NextRequest) {
 
     let rejected = 0;
     const errors: string[] = [];
-    const valid: any[] = [];
+    const valid: StoredEntity[] = [];
 
     // Check the whole batch before storing any of it, so what the response
     // reports as accepted is exactly what reached the store.
@@ -153,7 +174,7 @@ export async function POST(request: NextRequest) {
 
     // Log ingestion
     globalForSDK.sdkIngestLog.push({
-      source: body.source,
+      source: String(body.source),
       count: accepted,
       timestamp: new Date().toISOString(),
     });

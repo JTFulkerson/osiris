@@ -8,8 +8,10 @@ afterEach(() => {
   store().sdkEntityStore.clear();
 });
 
+type StreamEvent = { type: string; payload: unknown[]; total?: number; truncated?: boolean };
+
 async function events(reader: ReadableStreamDefaultReader<Uint8Array>, n: number) {
-  const out: any[] = [];
+  const out: StreamEvent[] = [];
   const decoder = new TextDecoder();
   while (out.length < n) {
     const { value } = await reader.read();

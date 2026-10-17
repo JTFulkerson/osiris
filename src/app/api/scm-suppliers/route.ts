@@ -18,6 +18,10 @@ export const maxDuration = 60;
 
 type Point = { lat: number; lng: number };
 type Signal = 'earthquakes' | 'fires' | 'disaster_alerts' | 'conflict';
+/** A fire hotspot or a GDACS alert, as those feeds return them. */
+type Located = Point & { type?: string };
+type Quake = Point & { mag: number };
+type UsgsFeature = { geometry: { coordinates: number[] }; properties: { mag: number } };
 
 const GDACS_TYPE_LABELS: Record<string, string> = {
   weather: 'TROPICAL CYCLONE', flood: 'FLOOD', volcano: 'VOLCANO', drought: 'DROUGHT',
@@ -64,9 +68,13 @@ export async function GET() {
   // Each source on its own: one failing must not take the others with it.
   const [eq, fire, disaster, conflict] = await Promise.allSettled([
     fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson', { signal: AbortSignal.timeout(8000) })
-      .then(async r => { if (!r.ok) throw new Error(`USGS ${r.status}`); return (await r.json()).features ?? []; }),
-    getFires().then(async r => { if (!r.ok) throw new Error(`fires ${r.status}`); return (await r.json()).fires ?? []; }),
-    getDisasterAlerts().then(async r => {
+      .then(async (r): Promise<Quake[]> => {
+        if (!r.ok) throw new Error(`USGS ${r.status}`);
+        const features: UsgsFeature[] = (await r.json()).features ?? [];
+        return features.map(f => ({ lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1], mag: f.properties.mag }));
+      }),
+    getFires().then(async (r): Promise<Located[]> => { if (!r.ok) throw new Error(`fires ${r.status}`); return (await r.json()).fires ?? []; }),
+    getDisasterAlerts().then(async (r): Promise<Located[]> => {
       const body = await r.json();
       if (!r.ok || body.error) throw new Error(body.error || `GDACS ${r.status}`);
       return body.events ?? [];
@@ -79,16 +87,16 @@ export async function GET() {
 
   if (eq.status === 'fulfilled') {
     dynamicSuppliers.forEach(sup => {
-      const nearbyEq = near(eq.value.map((f: any) => ({ lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1], mag: f.properties.mag })), sup, 150);
+      const nearbyEq = near(eq.value, sup, 150);
       if (nearbyEq.length > 0) {
         raise(sup, 'CRITICAL');
-        sup.active_threats.push(`SEISMIC SHOCK (M${Math.max(...nearbyEq.map((e: any) => e.mag)).toFixed(1)})`);
+        sup.active_threats.push(`SEISMIC SHOCK (M${Math.max(...nearbyEq.map(e => e.mag)).toFixed(1)})`);
       }
     });
   } else failed.push('earthquakes');
 
   if (fire.status === 'fulfilled') {
-    const fires = fire.value.filter((f: any) => f.type !== 'volcano');
+    const fires = fire.value.filter(f => f.type !== 'volcano');
     dynamicSuppliers.forEach(sup => {
       const nearbyFires = near(fires, sup, 50);
       if (nearbyFires.length > 0) {
@@ -100,9 +108,9 @@ export async function GET() {
 
   if (disaster.status === 'fulfilled') {
     // Earthquakes and wildfires are counted from USGS and FIRMS above.
-    const alerts = disaster.value.filter((e: any) => GDACS_TYPE_LABELS[e.type]);
+    const alerts = disaster.value.filter(e => e.type && GDACS_TYPE_LABELS[e.type]);
     dynamicSuppliers.forEach(sup => {
-      for (const label of new Set(near(alerts, sup, 150).map((e: any) => GDACS_TYPE_LABELS[e.type]))) {
+      for (const label of new Set(near(alerts, sup, 150).map(e => GDACS_TYPE_LABELS[e.type!]))) {
         raise(sup, 'HIGH');
         sup.active_threats.push(`GDACS ALERT: ${label}`);
       }
