@@ -23,6 +23,7 @@ import RainBar from '@/components/RainBar';
 import { DOCK } from '@/components/TimeBox';
 import LiveNewsPreviews, { type PreviewFeed } from '@/components/LiveNewsPreviews';
 import { attachTerrain, type TerrainStatus } from '@/lib/map-terrain';
+import { TRANSIT_COLOR, TRANSIT_POLL_MS, TRANSIT_VEHICLE_ZOOM, occupancyLabel, positionAge, viewBBox, type TransitFeedInfo, type TransitVehicle } from '@/lib/transit';
 
 import { applyMapProjection } from '@/lib/map-projection';
 
@@ -194,6 +195,9 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
      the feed's locate button can land on a pin and open it. */
   const alertPinsRef = useRef<AlertPinFeature[]>([]);
   const openAlertPinRef = useRef<((id: string) => void) | null>(null);
+  /* The operators behind the transit vehicles on screen, by feed id, for the
+     vehicle popup: the features carry only the id. */
+  const transitFeedsRef = useRef<Map<string, TransitFeedInfo>>(new Map());
   const [mapReady, setMapReady] = useState(false);
 
   // Do not replay an earlier explicit zoom request after theme/retry remounts.
@@ -440,7 +444,7 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
       createDot(map, 'dot-fire', isGhost ? phantomPurple : '#E65100', 10);
       createDot(map, 'dot-cctv', cameraColor, 10);
 
-      const sources = ['flights','military','jets','private-fl','satellites','earthquakes','gdelt','day-night','cctv','fires','weather','infrastructure','maritime','maritime-choke','maritime-ships','live-news','conflict-zones', 'war-alerts-targets', 'war-alerts-lines', 'balloons', 'radiation', 'ip-sweep-devices', 'ip-sweep-pulse', 'ip-sweep-connections', 'scan-targets', 'sdk-entities', 'sdk-links', 'malware-nodes', 'malware-new', 'network-mesh', 'cyber-heads', 'gdelt-events', 'cf-outages', 'cf-attacks', 'alert-pins'];
+      const sources = ['flights','military','jets','private-fl','satellites','earthquakes','gdelt','day-night','cctv','fires','weather','infrastructure','maritime','maritime-choke','maritime-ships','live-news','conflict-zones', 'war-alerts-targets', 'war-alerts-lines', 'balloons', 'radiation', 'ip-sweep-devices', 'ip-sweep-pulse', 'ip-sweep-connections', 'scan-targets', 'sdk-entities', 'sdk-links', 'malware-nodes', 'malware-new', 'network-mesh', 'cyber-heads', 'gdelt-events', 'cf-outages', 'cf-attacks', 'alert-pins', 'transit-vehicles', 'transit-coverage'];
       sources.forEach(s => map.addSource(s, { type: 'geojson', data: EMPTY_FC }));
 
       // ── FLIGHT ROUTE VISUALIZATION SOURCES & LAYERS ──
@@ -929,6 +933,47 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
         'text-offset': [0, 1.2], 'text-allow-overlap': false,
       }, paint: { 'text-color': ['match', ['get','type'], 'military','#D32F2F', 'tanker','#E65100', 'cargo','#26C6DA', '#B0BEC5'], 'text-halo-color': '#000', 'text-halo-width': 1 }});
 
+      // ── LIVE TRANSIT ── operators' own GPS feeds, see lib/transit.
+      // Zoomed out: one ring per feed where coverage is, sized by its fleet.
+      map.addLayer({ id: 'transit-coverage-dots', type: 'circle', source: 'transit-coverage', maxzoom: TRANSIT_VEHICLE_ZOOM, paint: {
+        'circle-radius': ['interpolate', ['linear'], ['get', 'vehicles'], 0, 3, 100, 5, 1000, 9, 5000, 13],
+        'circle-color': TRANSIT_COLOR, 'circle-opacity': 0.18,
+        'circle-stroke-color': TRANSIT_COLOR, 'circle-stroke-width': 1.2, 'circle-stroke-opacity': 0.85,
+      }});
+      map.addLayer({ id: 'transit-coverage-label', type: 'symbol', source: 'transit-coverage', minzoom: 3.5, maxzoom: TRANSIT_VEHICLE_ZOOM, layout: {
+        'text-field': ['get', 'name'], 'text-size': 9, 'text-font': ['Open Sans Regular'],
+        'text-offset': [0, 1.3], 'text-allow-overlap': false,
+      }, paint: { 'text-color': TRANSIT_COLOR, 'text-halo-color': '#000', 'text-halo-width': 1, 'text-opacity': 0.85 }});
+      // Zoomed in: every vehicle. Those that report a heading point where they are going.
+      {
+        const s = 32, c = document.createElement('canvas');
+        c.width = s; c.height = s;
+        const ctx = c.getContext('2d')!;
+        ctx.fillStyle = TRANSIT_COLOR;
+        ctx.strokeStyle = '#04110F';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); // a dot with a point on top
+        ctx.moveTo(s / 2, 2);
+        ctx.lineTo(s / 2 + 7, 13);
+        ctx.arc(s / 2, s / 2 + 3, 9, -Math.PI / 2 + 0.85, Math.PI * 1.5 - 0.85);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        map.addImage('transit-arrow', { width: s, height: s, data: new Uint8Array(ctx.getImageData(0, 0, s, s).data) }, { pixelRatio: 2 });
+      }
+      map.addLayer({ id: 'transit-dots', type: 'circle', source: 'transit-vehicles', minzoom: TRANSIT_VEHICLE_ZOOM,
+        filter: ['any', ['!', ['has', 'b']], ['<', ['zoom'], 12]], paint: {
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 1.8, 9, 3, 12, 4.5, 16, 7],
+          'circle-color': TRANSIT_COLOR, 'circle-opacity': 0.9,
+          'circle-stroke-color': '#04110F', 'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 9, 0, 12, 1],
+        }});
+      map.addLayer({ id: 'transit-heading', type: 'symbol', source: 'transit-vehicles', minzoom: 12, filter: ['has', 'b'], layout: {
+        'icon-image': 'transit-arrow', 'icon-rotate': ['get', 'b'], 'icon-rotation-alignment': 'map',
+        'icon-size': ['interpolate', ['linear'], ['zoom'], 12, 0.75, 16, 1.2], 'icon-allow-overlap': true,
+      }});
+      map.addLayer({ id: 'transit-label', type: 'symbol', source: 'transit-vehicles', minzoom: 13, layout: {
+        'text-field': ['coalesce', ['get', 'route'], ['get', 'label'], ''], 'text-size': 9, 'text-font': ['Open Sans Bold'],
+        'text-offset': [0, 1.25], 'text-allow-overlap': false,
+      }, paint: { 'text-color': TRANSIT_COLOR, 'text-halo-color': '#000', 'text-halo-width': 1.2 }});
 
       setMapReady(true);
       // 'load' means the style parsed; 'idle' means the tiles are drawn.
@@ -1159,7 +1204,8 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
       'gdelt-dots','weather-dots','infra-dots','maritime-dots','choke-dots','news-dots',
       'balloon-dots','rad-dots','ship-dots','sweep-device-dots','scan-targets-dots',
       'sdk-sea','sdk-air','sdk-intel','malware-dots','cyber-heads','gdelt-events-dots',
-      'cf-outage-dots','cf-attack-dots','flight-dots','military-dots','jet-dots','private-dots','alert-pin-dots']);
+      'cf-outage-dots','cf-attack-dots','flight-dots','military-dots','jet-dots','private-dots','alert-pin-dots',
+      'transit-dots','transit-heading','transit-coverage-dots']);
 
     // Satellites are picked on the GPU: the pick pass runs the same vertex
     // shader as the visible one, so the target is always exactly where the
@@ -1497,7 +1543,7 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
     });
 
     // ── Generic hover for clickables ──
-    ['conflict-icons','cctv-dots','eq-circles','fires-heat','gdelt-dots','weather-dots','infra-dots','maritime-dots','choke-dots','news-dots','balloon-dots','rad-dots','ship-dots','sweep-device-dots','scan-targets-dots','sdk-sea','sdk-sea-glow','sdk-sea-atmo','sdk-air','sdk-air-glow','sdk-air-atmo','sdk-intel','sdk-intel-glow','sdk-intel-atmo','malware-dots','cyber-heads','gdelt-events-dots','cf-outage-dots','cf-attack-dots','alert-pin-dots'].forEach(layer => {
+    ['conflict-icons','cctv-dots','eq-circles','fires-heat','gdelt-dots','weather-dots','infra-dots','maritime-dots','choke-dots','news-dots','balloon-dots','rad-dots','ship-dots','sweep-device-dots','scan-targets-dots','sdk-sea','sdk-sea-glow','sdk-sea-atmo','sdk-air','sdk-air-glow','sdk-air-atmo','sdk-intel','sdk-intel-glow','sdk-intel-atmo','malware-dots','cyber-heads','gdelt-events-dots','cf-outage-dots','cf-attack-dots','alert-pin-dots','transit-dots','transit-heading','transit-coverage-dots'].forEach(layer => {
       map.on('mouseenter', layer, () => { map.getCanvas().style.cursor = 'pointer'; });
       map.on('mouseleave', layer, () => { map.getCanvas().style.cursor = ''; });
     });
@@ -1621,6 +1667,47 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
         <div><span style="color:#5C5A54;font-size:9px;">DESTINATION: </span><span style="color:#E8E6E0;font-size:9px;">${p.destination || 'UNKNOWN'}</span></div>
         <a href="https://www.marinetraffic.com/en/ais/details/ships/mmsi:${p.mmsi}" target="_blank" style="${linkStyle}flex:1;text-align:center;color:${color};border:1px solid ${color}40;background:${color}15;display:inline-block;width:100%;box-sizing:border-box;margin-top:4px;">[ OPEN SOURCE ↗ ]</a>
       </div>`);
+    });
+
+    // ── Live transit vehicle ──
+    const transitPopup = (e: maplibregl.MapLayerMouseEvent) => {
+      if (!e.features?.length) return;
+      const p = e.features[0].properties as any;
+      const coords = (e.features[0].geometry as any).coordinates;
+      const feed = transitFeedsRef.current.get(p.f);
+      const c = TRANSIT_COLOR;
+      const where = feed ? [feed.region, feed.country].filter(Boolean).join(', ') : '';
+      const cell = (label: string, value: string | undefined) => value
+        ? `<div><span style="color:#5C5A54;">${label}</span><br/><span style="color:#E8E6E0;font-family:monospace;">${htmlEsc(value)}</span></div>` : '';
+      const speed = p.s !== undefined && p.s !== null ? `${Math.round(Number(p.s) * 3.6)} km/h` : undefined;
+      const heading = p.b !== undefined && p.b !== null ? `${Math.round(Number(p.b))}°` : undefined;
+      const cells = [
+        cell('ROUTE', p.route ?? undefined), cell('VEHICLE', p.label ?? p.id ?? undefined),
+        cell('SPEED', speed), cell('HEADING', heading),
+        cell('SEATS', occupancyLabel(p.occ ?? undefined)), cell('POSITION', positionAge(p.t ?? undefined)),
+      ].join('');
+      popup(coords, `<div style="${pStyle}border:1px solid ${c}55;min-width:220px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid ${c}33;padding-bottom:6px;margin-bottom:8px;">
+          <div style="color:${c};font-size:12px;font-weight:700;letter-spacing:0.1em;">🚌 ${p.route ? `ROUTE ${htmlEsc(p.route)}` : 'TRANSIT VEHICLE'}</div>
+        </div>
+        <div style="color:#E8E6E0;font-size:11px;font-weight:bold;margin-bottom:2px;">${htmlEsc(feed?.provider ?? 'Transit operator')}</div>
+        ${where ? `<div style="color:#8A8880;font-size:9.5px;margin-bottom:8px;">${htmlEsc(where)}</div>` : ''}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:9px;margin-bottom:8px;background:rgba(0,0,0,0.3);padding:6px;border-radius:4px;">${cells}</div>
+        <div style="font-size:8.5px;color:#5C5A54;line-height:1.4;">Position from the operator's own GPS feed (GTFS-Realtime), refreshed every 20 s.</div>
+        ${feed?.license ? `<a href="${urlSafe(feed.license)}" target="_blank" rel="noopener noreferrer" style="${linkStyle}color:${c};border:1px solid ${c}40;background:${c}15;">[ FEED TERMS ↗ ]</a>` : ''}
+      </div>`);
+    };
+    map.on('click', 'transit-dots', transitPopup);
+    map.on('click', 'transit-heading', transitPopup);
+
+    // ── Transit coverage ring: fly in far enough to see the vehicles ──
+    map.on('click', 'transit-coverage-dots', e => {
+      const p = e.features?.[0]?.properties as any;
+      if (!p?.core) return;
+      try {
+        const [w, s, east, n] = JSON.parse(p.core);
+        map.fitBounds([[w, s], [east, n]], { padding: 40, maxZoom: 12, duration: 1800, essential: true });
+      } catch { /* malformed bbox: stay put */ }
     });
 
     // ── Weather Events (NASA EONET + NOAA/NWS + GDACS) ──
@@ -2350,6 +2437,71 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
     return () => clearInterval(timer);
   }, [mapReady, activeLayers.alert_pins]);
 
+  // ── LIVE TRANSIT ──
+  // Zoomed out, where the feeds are; zoomed in, the vehicles on screen, asked
+  // for again as the map moves and every TRANSIT_POLL_MS while it is on.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!mapReady || !map) return;
+    if (!activeLayers.transit) {
+      setGeo('transit-vehicles', []);
+      setGeo('transit-coverage', []);
+      return;
+    }
+    let ctrl: AbortController | null = null;
+    let coverageLoaded = false;
+
+    const loadCoverage = async () => {
+      if (coverageLoaded) return;
+      try {
+        const res = await fetch('/api/transit?coverage=1');
+        if (!res.ok) return;
+        const { feeds } = await res.json();
+        coverageLoaded = true;
+        setGeo('transit-coverage', (feeds || []).map((f: any) => ({
+          type: 'Feature' as const,
+          geometry: { type: 'Point' as const, coordinates: f.center },
+          properties: { name: f.region || f.provider, vehicles: f.vehicles, core: JSON.stringify(f.core) },
+        })));
+      } catch { /* the rings are a guide; the vehicles still load when zoomed in */ }
+    };
+
+    const loadVehicles = async () => {
+      const b = map.getBounds();
+      const [w, s, e, n] = viewBBox(b.getWest(), b.getSouth(), b.getEast(), b.getNorth());
+      ctrl?.abort();
+      ctrl = new AbortController();
+      try {
+        const res = await fetch(`/api/transit?bbox=${w.toFixed(4)},${s.toFixed(4)},${e.toFixed(4)},${n.toFixed(4)}`, { signal: ctrl.signal });
+        if (!res.ok) return;
+        const data = await res.json();
+        for (const f of data.feeds || []) transitFeedsRef.current.set(f.id, f);
+        setGeo('transit-vehicles', (data.vehicles || []).map((v: TransitVehicle) => ({
+          type: 'Feature' as const,
+          geometry: { type: 'Point' as const, coordinates: [v.lng, v.lat] },
+          properties: v,
+        })));
+      } catch { /* aborted by a newer view, or offline: keep what is drawn */ }
+    };
+
+    const load = () => {
+      if (document.hidden) return;
+      if (map.getZoom() < TRANSIT_VEHICLE_ZOOM) loadCoverage();
+      else loadVehicles();
+    };
+    // A wheel zoom ends a move at every notch; ask once the map has settled.
+    let settle: ReturnType<typeof setTimeout> | undefined;
+    const onMoveEnd = () => { clearTimeout(settle); settle = setTimeout(load, 350); };
+    load();
+    map.on('moveend', onMoveEnd);
+    const timer = setInterval(load, TRANSIT_POLL_MS);
+    return () => {
+      ctrl?.abort();
+      clearTimeout(settle);
+      map.off('moveend', onMoveEnd);
+      clearInterval(timer);
+    };
+  }, [mapReady, activeLayers.transit, setGeo]);
 
   useEffect(() => {
     if (!mapReady) return;
@@ -2434,6 +2586,7 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
     setVis(['maritime-glow','maritime-dots','maritime-label'], activeLayers.maritime);
     setVis(['choke-glow','choke-dots','choke-label'], activeLayers.maritime);
     setVis(['ship-dots','ship-label'], activeLayers.maritime);
+    setVis(['transit-coverage-dots','transit-coverage-label','transit-dots','transit-heading','transit-label'], !!activeLayers.transit);
     setVis(['news-glow','news-dots','news-label'], activeLayers.live_news);
     setVis(['alert-pin-glow','alert-pin-dots','alert-pin-label','alert-pin-pulse','alert-pin-selected'], activeLayers.alert_pins);
     setVis(['conflict-icons'], activeLayers.conflict_zones !== false);

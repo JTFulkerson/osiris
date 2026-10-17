@@ -463,6 +463,9 @@ export default function Dashboard() {
     jets: false,
     military: false,
     maritime: true,
+    /* Buses and other transit from operators' GPS feeds — see lib/transit.
+       Off until asked for: it is city-scale, and reads feeds only for the view. */
+    transit: false,
     // On from the start: the orbiting fleet around the globe is the first
     // thing the splash lifts onto.
     satellites: true,

@@ -319,6 +319,17 @@ export const API_GROUPS: ApiGroup[] = [
         env: ['AIS_API_KEY'],
       },
       {
+        path: '/api/transit',
+        method: 'GET',
+        summary: 'Live buses and other transit vehicles, from operators’ own GTFS-Realtime feeds. Keyless.',
+        params: [
+          { name: 'bbox', desc: 'west,south,east,north in degrees: every vehicle in the box.', example: '-71.2,42.25,-70.95,42.45' },
+          { name: 'coverage', desc: 'Set to 1 for where there are feeds instead: one entry per feed, with its area and fleet size.', example: '1' },
+        ],
+        returns: ['vehicles', 'feeds', 'skippedFeeds', 'truncated', 'total', 'timestamp'],
+        notes: 'Each vehicle carries its feed id `f`, `lat`, `lng`, and where the feed gives them `route`, `label`, `trip`, bearing `b` (degrees), speed `s` (m/s), position time `t` (epoch seconds) and occupancy `occ`. Feeds are read only for the area asked about and shared between callers for 20 s; up to 40 feeds are read per box, nearest its centre first. Positions older than 15 minutes are left out.',
+      },
+      {
         path: '/api/arcgis',
         method: 'GET',
         summary: 'Queries a configured ArcGIS feature service.',

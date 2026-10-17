@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plane, Satellite, Sun, AlertTriangle, Camera,
   CloudLightning, Ship, Network, Database, Ghost,
-  Flame, Tv, Radio, Mountain, Anchor, Megaphone, SlidersHorizontal
+  Flame, Tv, Radio, Mountain, Anchor, Megaphone, SlidersHorizontal, Bus
 } from 'lucide-react';
 import StyleStudio from './StyleStudio';
 import { TERRAIN_MIN_ZOOM, type TerrainStatus } from '@/lib/map-terrain';
@@ -80,6 +80,14 @@ const LAYER_GROUPS: LayerGroupDef[] = [
     icon: Ship,
     layers: [
       { key: 'maritime', label: 'Maritime / Naval', dataKey: 'maritime_ships,maritime_ports,maritime_chokepoints' },
+    ],
+  },
+  {
+    label: 'TRANSIT',
+    fullLabel: 'GROUND TRANSIT',
+    icon: Bus,
+    layers: [
+      { key: 'transit', label: 'Live Buses & Transit', description: 'Operator GPS feeds · every 20 s', dataKey: '' },
     ],
   },
   {
