@@ -738,7 +738,7 @@ export const API_GROUPS: ApiGroup[] = [
         env: ['SDK_INGEST_KEY'],
         requiresAuth: true,
         notes:
-          'Each entity needs `id`, `position.lat`, and `position.lng`; everything else is defaulted. Stored ids are namespaced to `ext-{source}-{id}`, so two platforms can push the same id safely. Fails closed: 503 when `SDK_INGEST_KEY` is unset, 401 on key mismatch, 400 on a malformed payload.',
+          'Each entity needs `id`, `position.lat`, and `position.lng`; everything else is defaulted. Stored ids are namespaced to `ext-{source}-{id}`, so two platforms can push the same id safely. The batch is checked whole before anything is stored, so `accepted` is exactly what reached the map. Fails closed: 503 when `SDK_INGEST_KEY` is unset, 401 on key mismatch, 400 on a malformed payload or invalid JSON, 413 over 2 MB. The store holds up to 20,000 entities; past that, new ids are refused and updates to held ones still land.',
         bodyExample: `{
   "source": "lattice",
   "apiKey": "$SDK_INGEST_KEY",
@@ -768,7 +768,7 @@ export const API_GROUPS: ApiGroup[] = [
         summary: 'Server-Sent Events stream of normalised entities as they arrive.',
         returns: ['…SSE event stream'],
         notes:
-          'Opens with a `status` event carrying `connected`, `entityCount`, `feedCount`, `latticeStatus`, and `lastUpdate`. Consume with `EventSource`, not `fetch`.',
+          'Opens with a `status` event carrying `connected`, `entityCount`, `feedCount`, `latticeStatus`, and `lastUpdate`. Each `entity_update` carries up to 500 entities in `payload`, with `total` (how many are held) and `truncated` (true when `payload` is not all of them). Consume with `EventSource`, not `fetch`.',
       },
     ],
   },
