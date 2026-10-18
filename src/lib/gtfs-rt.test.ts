@@ -27,6 +27,11 @@ describe('decodeVehicleFeed', () => {
     expect(out.vehicles.map(v => v.id)).toEqual(['hsl-1']);
   });
 
+  it('drops a heading of -1, which some operators send for "none"', () => {
+    const out = decodeVehicleFeed(feed(entity('e', msg(4, vehicle({ lat: 53.8, lng: -1.55, bearing: -1 })))));
+    expect(out.vehicles[0].bearing).toBeUndefined();
+  });
+
   it('falls back to the entity id when the vehicle has none', () => {
     const body = msg(4, msg(2, [...f32(1, 52.37), ...f32(2, 4.89)]));
     expect(decodeVehicleFeed(feed(entity('ent-7', body))).vehicles[0].id).toBe('ent-7');

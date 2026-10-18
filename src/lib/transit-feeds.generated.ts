@@ -3,7 +3,7 @@ import type { TransitFeed } from './transit';
 /**
  * OSIRIS — live, keyless GTFS-Realtime vehicle-position feeds (GENERATED).
  *
- * Built by tools/generate-transit-feeds.mjs on 2026-10-17 from the Mobility
+ * Built by tools/generate-transit-feeds.mjs on 2026-10-18 from the Mobility
  * Database catalogue (https://mobilitydatabase.org) plus a few feeds it lacks.
  * Every feed below answered with a decodable GTFS-Realtime FeedMessage when it
  * was built. `bbox` is [west, south, east, north]: the extent of the vehicles
@@ -22,23 +22,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Adelaide",
     "url": "https://gtfs.adelaidemetro.com.au/v1/realtime/vehicle_positions",
     "bbox": [
-      138.4256,
+      138.4259,
       -35.3392,
       139.0361,
       -34.571
     ],
     "center": [
-      138.5993,
-      -34.9212
+      138.5946,
+      -34.9221
     ],
     "core": [
-      138.4773,
-      -35.1142,
-      138.723,
-      -34.7383
+      138.4719,
+      -35.1542,
+      138.7221,
+      -34.7432
     ],
     "mdb": "1772",
-    "vehiclesAtProbe": 230
+    "vehiclesAtProbe": 210
   },
   {
     "id": "canberra-metro-operations",
@@ -47,50 +47,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Canberra",
     "url": "http://files.transport.act.gov.au/feeds/lightrail.pb",
     "bbox": [
-      149.0814,
-      -35.3149,
-      149.201,
-      -35.1435
+      149.0806,
+      -35.3203,
+      149.1999,
+      -35.1385
     ],
     "center": [
-      149.1483,
-      -35.2046
+      149.1473,
+      -35.2089
     ],
     "core": [
-      149.1114,
-      -35.2849,
-      149.171,
-      -35.1735
+      149.1106,
+      -35.2903,
+      149.1699,
+      -35.1685
     ],
     "license": "https://creativecommons.org/licenses/by/4.0/legalcode",
     "mdb": "1423",
     "vehiclesAtProbe": 4
   },
   {
-    "id": "translink-south-east-queensland-translin",
-    "provider": "TransLink South East Queensland (TransLink SEQ)",
+    "id": "translink-south-east-queensland",
+    "provider": "TransLink (South East Queensland)",
     "country": "AU",
     "region": "Queensland",
-    "url": "https://gtfsrt.api.translink.com.au/api/realtime/SEQ/VehiclePositions",
+    "url": "https://gtfsrt.api.translink.com.au/api/realtime/seq/VehiclePositions",
     "bbox": [
       152.1242,
-      -28.1945,
-      153.5456,
+      -28.2016,
+      153.5434,
       -26.1594
     ],
     "center": [
-      153.047,
-      -27.4993
+      153.0501,
+      -27.5012
     ],
     "core": [
-      152.8828,
-      -28.0991,
-      153.4506,
-      -26.7286
+      152.8852,
+      -28.1097,
+      153.4512,
+      -26.6841
     ],
-    "license": "https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq/resource/be7f19e5-3ee8-4396-b9eb-46f6b4ce8039",
+    "license": "https://translink.com.au/about-translink/open-data",
     "mdb": "1700",
-    "vehiclesAtProbe": 800
+    "vehiclesAtProbe": 697
   },
   {
     "id": "translink-sunbus-cairns",
@@ -99,24 +99,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Cairns",
     "url": "https://gtfsrt.api.translink.com.au/api/realtime/CNS/VehiclePositions",
     "bbox": [
-      145.6307,
-      -17.1437,
-      145.8249,
-      -16.7406
+      145.6323,
+      -17.1482,
+      145.8214,
+      -16.7436
     ],
     "center": [
-      145.7495,
-      -16.9209
+      145.747,
+      -16.9253
     ],
     "core": [
-      145.6735,
-      -17.0168,
-      145.7946,
-      -16.7968
+      145.6749,
+      -16.9984,
+      145.7909,
+      -16.8073
     ],
     "license": "https://translink.com.au/about-translink/open-data",
     "mdb": "1704",
-    "vehiclesAtProbe": 22
+    "vehiclesAtProbe": 23
   },
   {
     "id": "urban-mobility-center-sofia-traffic",
@@ -125,74 +125,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Sofia City",
     "url": "https://gtfs.sofiatraffic.bg/api/v1/vehicle-positions",
     "bbox": [
-      23.0965,
-      42.5364,
-      23.5701,
-      42.8671
+      23.138,
+      42.5379,
+      23.546,
+      42.8688
     ],
     "center": [
-      23.3208,
-      42.6925
+      23.3237,
+      42.6926
     ],
     "core": [
-      23.2226,
-      42.6043,
-      23.4357,
-      42.7718
+      23.2219,
+      42.6135,
+      23.4359,
+      42.778
     ],
     "license": "https://www.sofiatraffic.bg/bg/info-center/gtfs-danni",
     "mdb": "2847",
-    "vehiclesAtProbe": 299
+    "vehiclesAtProbe": 352
   },
   {
     "id": "barrie-transit",
     "provider": "Barrie Transit",
     "country": "CA",
     "region": "Barrie",
-    "url": "http://www.myridebarrie.ca/gtfs/GTFS_VehiclePositions.pb",
+    "url": "https://www.myridebarrie.ca/gtfs/GTFS_VehiclePositions.pb",
     "bbox": [
-      -79.7702,
-      44.2844,
-      -79.5657,
-      44.4657
+      -79.7555,
+      44.3218,
+      -79.6109,
+      44.4394
     ],
     "center": [
-      -79.6914,
-      44.3738
+      -79.6903,
+      44.3828
     ],
     "core": [
-      -79.7402,
-      44.3144,
-      -79.5957,
-      44.4357
+      -79.7255,
+      44.3539,
+      -79.6697,
+      44.4094
     ],
     "license": "https://www.barrie.ca/services-payments/transportation-parking/barrie-transit/barrie-gtfs",
     "mdb": "1382",
-    "vehiclesAtProbe": 9
-  },
-  {
-    "id": "barrie-transit-175",
-    "provider": "Barrie Transit",
-    "country": "CA",
-    "region": "",
-    "url": "https://www.myridebarrie.ca/gtfs/GTFS_VehiclePositions.pb",
-    "bbox": [
-      -79.7702,
-      44.2844,
-      -79.5657,
-      44.4657
-    ],
-    "center": [
-      -79.6914,
-      44.3738
-    ],
-    "core": [
-      -79.7402,
-      44.3144,
-      -79.5957,
-      44.4357
-    ],
-    "vehiclesAtProbe": 9
+    "vehiclesAtProbe": 3
   },
   {
     "id": "bc-transit-bulkley-nechako-prince-george",
@@ -201,24 +177,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Bulkley-Nechako",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=22",
     "bbox": [
-      -122.8676,
-      53.819,
-      -122.7025,
-      54.0096
+      -122.8453,
+      53.8193,
+      -122.6975,
+      53.9706
     ],
     "center": [
-      -122.778,
-      53.9103
+      -122.7823,
+      53.913
     ],
     "core": [
-      -122.8376,
-      53.849,
-      -122.7325,
-      53.9796
+      -122.8153,
+      53.8493,
+      -122.7275,
+      53.9406
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2513",
-    "vehiclesAtProbe": 9
+    "vehiclesAtProbe": 7
   },
   {
     "id": "bc-transit-campbell-river-transit",
@@ -227,24 +203,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Campbell River",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=12",
     "bbox": [
-      -125.3239,
+      -125.2864,
       49.87,
       -125.129,
-      50.0937
+      50.0639
     ],
     "center": [
-      -125.2585,
-      50.0308
+      -125.1876,
+      49.9731
     ],
     "core": [
-      -125.2939,
-      49.9867,
-      -125.2276,
-      50.0637
+      -125.2524,
+      49.9223,
+      -125.1676,
+      49.9931
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "1378",
-    "vehiclesAtProbe": 5
+    "vehiclesAtProbe": 2
   },
   {
     "id": "bc-transit-central-fraser-valley-chilliw",
@@ -253,24 +229,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Central Fraser Valley",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=13",
     "bbox": [
-      -122.9494,
-      48.9807,
+      -122.8953,
+      48.9962,
       -121.4203,
       49.3827
     ],
     "center": [
-      -122.2956,
-      49.0703
+      -122.2904,
+      49.0692
     ],
     "core": [
-      -122.6805,
-      49.0146,
-      -121.9317,
-      49.2558
+      -122.6824,
+      49.0262,
+      -121.8468,
+      49.1987
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2517",
-    "vehiclesAtProbe": 24
+    "vehiclesAtProbe": 19
+  },
+  {
+    "id": "bc-transit-columbia-valley-cranbrook-elk",
+    "provider": "BC Transit (Columbia Valley | Cranbrook | Elk Valley | Kimberley)",
+    "country": "CA",
+    "region": "Columbia Valley",
+    "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=21",
+    "bbox": [
+      -115.8144,
+      49.4708,
+      -115.7144,
+      49.5708
+    ],
+    "center": [
+      -115.7644,
+      49.5208
+    ],
+    "core": [
+      -115.7844,
+      49.5008,
+      -115.7444,
+      49.5408
+    ],
+    "license": "https://www.bctransit.com/open-data/terms-of-use",
+    "mdb": "2523",
+    "vehiclesAtProbe": 1
   },
   {
     "id": "bc-transit-comox-valley-transit-system",
@@ -280,19 +282,19 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=45",
     "bbox": [
       -125.1477,
-      49.4722,
-      -124.7952,
+      49.441,
+      -124.764,
       49.8734
     ],
     "center": [
-      -124.9871,
-      49.6992
+      -124.9354,
+      49.6241
     ],
     "core": [
-      -125.0196,
-      49.6725,
-      -124.9608,
-      49.7249
+      -125.0567,
+      49.471,
+      -124.794,
+      49.7
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2527",
@@ -311,18 +313,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       48.9983
     ],
     "center": [
-      -123.7016,
-      48.7769
+      -123.7915,
+      48.7083
     ],
     "core": [
-      -124.1852,
-      48.6175,
-      -123.5241,
-      48.8838
+      -124.2186,
+      48.4183,
+      -123.3644,
+      48.9983
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "1379",
-    "vehiclesAtProbe": 7
+    "vehiclesAtProbe": 0
   },
   {
     "id": "bc-transit-dawson-creek",
@@ -383,24 +385,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Hazelton",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=26",
     "bbox": [
-      -128.7046,
-      53.9971,
-      -127.6435,
-      55.3465
+      -128.6825,
+      54.0066,
+      -128.5825,
+      54.1066
     ],
     "center": [
-      -128.5909,
-      54.5277
+      -128.6325,
+      54.0566
     ],
     "core": [
-      -128.6746,
-      54.0271,
-      -127.6735,
-      55.3165
+      -128.6525,
+      54.0366,
+      -128.6125,
+      54.0766
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2477",
-    "vehiclesAtProbe": 4
+    "vehiclesAtProbe": 1
   },
   {
     "id": "bc-transit-kamloops-transit-system",
@@ -409,24 +411,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Kamloops",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=46",
     "bbox": [
-      -120.4641,
-      50.6,
+      -120.4229,
+      50.5955,
       -120.0788,
       50.8603
     ],
     "center": [
-      -120.3575,
-      50.6768
+      -120.3511,
+      50.6747
     ],
     "core": [
-      -120.4341,
-      50.63,
-      -120.2483,
-      50.7595
+      -120.3923,
+      50.6255,
+      -120.2864,
+      50.7204
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2554",
-    "vehiclesAtProbe": 18
+    "vehiclesAtProbe": 9
   },
   {
     "id": "bc-transit-kelowna-regional-transit-syst",
@@ -437,22 +439,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -119.79,
       49.7519,
-      -119.342,
+      -119.337,
       50.0735
     ],
     "center": [
-      -119.4531,
-      49.8873
+      -119.4541,
+      49.8863
     ],
     "core": [
-      -119.6442,
-      49.8088,
-      -119.373,
-      49.9827
+      -119.6511,
+      49.8086,
+      -119.367,
+      49.9599
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2558",
-    "vehiclesAtProbe": 28
+    "vehiclesAtProbe": 20
   },
   {
     "id": "bc-transit-merritt",
@@ -461,20 +463,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Merritt",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=37",
     "bbox": [
-      -120.8139,
-      50.0736,
-      -120.7139,
-      50.1736
+      -120.8439,
+      50.055,
+      -120.7439,
+      50.155
     ],
     "center": [
-      -120.7639,
-      50.1236
+      -120.7939,
+      50.105
     ],
     "core": [
-      -120.7839,
-      50.1036,
-      -120.7439,
-      50.1436
+      -120.8139,
+      50.085,
+      -120.7739,
+      50.125
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2503",
@@ -487,24 +489,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Nanaimo",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=41",
     "bbox": [
-      -124.3508,
-      48.7531,
-      -123.6682,
-      49.3689
+      -124.2443,
+      48.8664,
+      -123.6959,
+      49.3202
     ],
     "center": [
-      -123.9907,
-      49.1907
+      -123.951,
+      49.1643
     ],
     "core": [
-      -124.3208,
-      48.7831,
-      -123.6982,
-      49.3389
+      -124.2143,
+      48.8964,
+      -123.7259,
+      49.2902
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2476",
-    "vehiclesAtProbe": 19
+    "vehiclesAtProbe": 15
   },
   {
     "id": "bc-transit-pemberton-valley",
@@ -513,20 +515,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Pemberton Valley",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=50",
     "bbox": [
-      -123.0051,
-      50.0838,
-      -122.9041,
-      50.1847
+      -123.0045,
+      50.0846,
+      -122.8256,
+      50.2306
     ],
     "center": [
-      -122.9541,
-      50.1347
+      -122.8756,
+      50.1806
     ],
     "core": [
-      -122.9751,
-      50.1138,
-      -122.9341,
-      50.1547
+      -122.9745,
+      50.1146,
+      -122.8556,
+      50.2006
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2500",
@@ -556,7 +558,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2546",
-    "vehiclesAtProbe": 2
+    "vehiclesAtProbe": 0
   },
   {
     "id": "bc-transit-powell-river",
@@ -571,14 +573,14 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       49.9816
     ],
     "center": [
-      -124.5196,
-      49.8849
+      -124.5202,
+      49.8516
     ],
     "core": [
-      -124.5756,
-      49.7852,
-      -124.4996,
-      49.9049
+      -124.5407,
+      49.8152,
+      -124.5002,
+      49.8716
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2559",
@@ -608,7 +610,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2482",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 0
   },
   {
     "id": "bc-transit-revelstoke",
@@ -617,20 +619,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Revelstoke",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=36",
     "bbox": [
-      -118.2699,
-      50.9626,
-      -118.1699,
-      51.0626
+      -118.2632,
+      50.9715,
+      -118.1632,
+      51.0715
     ],
     "center": [
-      -118.2199,
-      51.0126
+      -118.2132,
+      51.0215
     ],
     "core": [
-      -118.2399,
-      50.9926,
-      -118.1999,
-      51.0326
+      -118.2332,
+      51.0015,
+      -118.1932,
+      51.0415
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2485",
@@ -643,20 +645,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Salt Spring Island",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=39",
     "bbox": [
-      -123.5788,
-      48.8355,
-      -123.4788,
-      48.9355
+      -123.5001,
+      48.719,
+      -123.4001,
+      48.819
     ],
     "center": [
-      -123.5288,
-      48.8855
+      -123.4501,
+      48.769
     ],
     "core": [
-      -123.5488,
-      48.8655,
-      -123.5088,
-      48.9055
+      -123.4701,
+      48.749,
+      -123.4301,
+      48.789
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2488",
@@ -671,22 +673,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -125.1477,
       49.4722,
-      -119.2118,
-      50.7466
+      -119.208,
+      50.3331
     ],
     "center": [
-      -119.2719,
-      50.2645
+      -119.2714,
+      50.2708
     ],
     "core": [
-      -119.3215,
-      50.238,
-      -119.2418,
-      50.7166
+      -119.3309,
+      50.2335,
+      -119.238,
+      50.3031
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2535",
-    "vehiclesAtProbe": 10
+    "vehiclesAtProbe": 5
   },
   {
     "id": "bc-transit-south-okanagan-similkameen",
@@ -695,20 +697,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "South Okanagan-Similkameen",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=15",
     "bbox": [
-      -119.6338,
-      49.4279,
-      -119.5338,
-      49.5279
+      -119.6533,
+      49.4424,
+      -119.5533,
+      49.5424
     ],
     "center": [
-      -119.5838,
-      49.4779
+      -119.6033,
+      49.4924
     ],
     "core": [
-      -119.6038,
-      49.4579,
-      -119.5638,
-      49.4979
+      -119.6233,
+      49.4724,
+      -119.5833,
+      49.5124
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2562",
@@ -721,24 +723,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Squamish",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=43",
     "bbox": [
-      -123.2062,
-      49.6474,
-      -123.0599,
-      49.7911
+      -123.2057,
+      49.6478,
+      -123.099,
+      49.8246
     ],
     "center": [
-      -123.1552,
-      49.7175
+      -123.1533,
+      49.703
     ],
     "core": [
-      -123.1762,
-      49.6774,
-      -123.0899,
-      49.7611
+      -123.1757,
+      49.6778,
+      -123.1297,
+      49.7946
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2566",
-    "vehiclesAtProbe": 4
+    "vehiclesAtProbe": 3
   },
   {
     "id": "bc-transit-sunshine-coast-transit-system",
@@ -748,23 +750,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=18",
     "bbox": [
       -123.9115,
-      49.356,
-      -123.4554,
-      49.5259
+      49.3528,
+      -123.4279,
+      49.531
     ],
     "center": [
-      -123.6187,
+      -123.5039,
       49.4399
     ],
     "core": [
-      -123.8212,
-      49.386,
-      -123.4854,
-      49.4959
+      -123.7775,
+      49.3828,
+      -123.4579,
+      49.501
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2570",
-    "vehiclesAtProbe": 6
+    "vehiclesAtProbe": 4
   },
   {
     "id": "bc-transit-victoria-regional-transit-sys",
@@ -774,23 +776,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=48",
     "bbox": [
       -123.7954,
-      48.3078,
-      -123.2446,
-      48.7382
+      48.3372,
+      -123.2579,
+      48.7141
     ],
     "center": [
-      -123.3803,
-      48.4487
+      -123.3694,
+      48.4455
     ],
     "core": [
-      -123.5356,
-      48.3923,
-      -123.2945,
-      48.6616
+      -123.526,
+      48.4005,
+      -123.2937,
+      48.595
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2574",
-    "vehiclesAtProbe": 92
+    "vehiclesAtProbe": 75
   },
   {
     "id": "bc-transit-west-coast",
@@ -799,20 +801,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "West Coast",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=51",
     "bbox": [
-      -125.9441,
-      49.0992,
-      -125.8441,
-      49.1992
+      -125.5993,
+      48.8881,
+      -125.4993,
+      48.9881
     ],
     "center": [
-      -125.8941,
-      49.1492
+      -125.5493,
+      48.9381
     ],
     "core": [
-      -125.9141,
-      49.1292,
-      -125.8741,
-      49.1692
+      -125.5693,
+      48.9181,
+      -125.5293,
+      48.9581
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2578",
@@ -826,23 +828,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=20",
     "bbox": [
       -118.1408,
-      49.0267,
+      49.0716,
       -116.8968,
       50.2967
     ],
     "center": [
-      -117.2863,
-      49.4867
+      -117.5188,
+      49.6841
     ],
     "core": [
-      -117.8139,
-      49.0567,
-      -117.2661,
-      49.5194
+      -118.1408,
+      49.0716,
+      -116.8968,
+      50.2967
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2582",
-    "vehiclesAtProbe": 3
+    "vehiclesAtProbe": 0
   },
   {
     "id": "bc-transit-whistler",
@@ -851,74 +853,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Whistler",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=44",
     "bbox": [
-      -123.0914,
-      50.0298,
-      -122.8812,
-      50.2061
+      -123.0645,
+      50.0368,
+      -122.8914,
+      50.1981
     ],
     "center": [
       -122.9549,
-      50.1139
+      50.1132
     ],
     "core": [
-      -123.0614,
-      50.0598,
-      -122.9112,
-      50.1761
+      -123.0345,
+      50.0668,
+      -122.9214,
+      50.1681
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "2586",
-    "vehiclesAtProbe": 12
+    "vehiclesAtProbe": 13
   },
   {
     "id": "burlington-transit",
     "provider": "Burlington Transit",
     "country": "CA",
     "region": "Burlington",
-    "url": "http://opendata.burlington.ca/gtfs-rt/GTFS_VehiclePositions.pb",
+    "url": "https://opendata.burlington.ca/gtfs-rt/GTFS_VehiclePositions.pb",
     "bbox": [
-      -79.9185,
-      43.2066,
-      -79.7119,
-      43.444
+      -79.9277,
+      43.2132,
+      -79.7252,
+      43.413
     ],
     "center": [
-      -79.7966,
-      43.3409
+      -79.8064,
+      43.3535
     ],
     "core": [
-      -79.8885,
-      43.2366,
-      -79.7419,
-      43.414
+      -79.8977,
+      43.2432,
+      -79.7635,
+      43.383
     ],
     "license": "https://opendata.burlington.ca/opendata-terms-of-use/City%20of%20Burlington%20-%20Open%20Data%20Terms%20of%20Use.pdf",
     "mdb": "1417",
-    "vehiclesAtProbe": 8
-  },
-  {
-    "id": "burlington-transit-177",
-    "provider": "Burlington Transit",
-    "country": "CA",
-    "region": "",
-    "url": "https://opendata.burlington.ca/gtfs-rt/GTFS_VehiclePositions.pb",
-    "bbox": [
-      -79.9185,
-      43.2066,
-      -79.7094,
-      43.4432
-    ],
-    "center": [
-      -79.7966,
-      43.3382
-    ],
-    "core": [
-      -79.8885,
-      43.2366,
-      -79.7394,
-      43.4132
-    ],
-    "vehiclesAtProbe": 8
+    "vehiclesAtProbe": 5
   },
   {
     "id": "durham-region-transit",
@@ -927,24 +905,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Durham",
     "url": "https://drtonline.durhamregiontransit.com/gtfsrealtime/VehiclePositions",
     "bbox": [
-      -79.3005,
-      43.7261,
-      -78.6383,
-      44.154
+      -79.2529,
+      43.7368,
+      -78.6656,
+      44.1123
     ],
     "center": [
-      -78.9586,
-      43.8876
+      -78.9472,
+      43.8815
     ],
     "core": [
-      -79.2086,
-      43.7667,
-      -78.7759,
-      43.9786
+      -79.1528,
+      43.8056,
+      -78.7745,
+      43.9653
     ],
     "license": "https://opendata.durham.ca/search?q=service%20alert",
     "mdb": "1466",
-    "vehiclesAtProbe": 38
+    "vehiclesAtProbe": 27
   },
   {
     "id": "edmonton-transit-system",
@@ -959,18 +937,44 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       53.7044
     ],
     "center": [
-      -113.5055,
-      53.5248
+      -113.5078,
+      53.5249
     ],
     "core": [
-      -113.6508,
-      53.4083,
-      -113.3671,
-      53.6369
+      -113.6498,
+      53.4246,
+      -113.3715,
+      53.6383
     ],
     "license": "https://www.edmonton.ca/transportation/Web-version2.1-OpenDataAgreement.pdf",
     "mdb": "1496",
-    "vehiclesAtProbe": 243
+    "vehiclesAtProbe": 135
+  },
+  {
+    "id": "guelph-transit",
+    "provider": "Guelph Transit",
+    "country": "CA",
+    "region": "",
+    "url": "https://glphprdtmgtfs.glphtrpcloud.com/tmgtfsrealtimewebservice/vehicle/vehiclepositions.pb",
+    "bbox": [
+      -80.3641,
+      43.4582,
+      -80.1284,
+      43.6293
+    ],
+    "center": [
+      -80.2425,
+      43.5392
+    ],
+    "core": [
+      -80.314,
+      43.4977,
+      -80.1827,
+      43.5878
+    ],
+    "license": "https://explore.guelph.ca/pages/open-data-license",
+    "mdb": "2592",
+    "vehiclesAtProbe": 25
   },
   {
     "id": "halifax-transit",
@@ -980,23 +984,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "http://gtfs.halifax.ca/realtime/Vehicle/VehiclePositions.pb",
     "bbox": [
       -63.8582,
-      44.5149,
+      44.5651,
       -63.2832,
       44.8863
     ],
     "center": [
-      -63.5907,
-      44.6533
+      -63.5376,
+      44.694
     ],
     "core": [
-      -63.6851,
-      44.5795,
-      -63.5187,
-      44.7734
+      -63.6031,
+      44.6502,
+      -63.5176,
+      44.714
     ],
     "license": "http://www.halifax.ca/opendata/transit.php",
     "mdb": "1607",
-    "vehiclesAtProbe": 36
+    "vehiclesAtProbe": 2
   },
   {
     "id": "hamilton-street-railway",
@@ -1006,23 +1010,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://opendata.hamilton.ca/GTFS-RT/GTFS_VehiclePositions.pb",
     "bbox": [
       -80.1281,
-      43.113,
-      -79.6233,
-      43.3853
+      43.1066,
+      -79.596,
+      43.3692
     ],
     "center": [
-      -79.8635,
-      43.2372
+      -79.8667,
+      43.2368
     ],
     "core": [
-      -79.9689,
-      43.1645,
-      -79.7401,
-      43.2912
+      -79.9707,
+      43.1654,
+      -79.7455,
+      43.2963
     ],
     "license": "https://www.hamilton.ca/city-council/data-maps/open-data/open-data-licence-terms-and-conditions",
     "mdb": "1458",
-    "vehiclesAtProbe": 90
+    "vehiclesAtProbe": 80
   },
   {
     "id": "kingston-transit",
@@ -1032,22 +1036,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://api.cityofkingston.ca/gtfs-realtime/vehicleupdates.pb",
     "bbox": [
       -76.6674,
-      44.1792,
-      -76.3963,
-      44.3161
+      44.1775,
+      -76.4391,
+      44.3137
     ],
     "center": [
-      -76.5069,
+      -76.507,
       44.2615
     ],
     "core": [
-      -76.5701,
-      44.2136,
-      -76.4664,
-      44.285
+      -76.5599,
+      44.2105,
+      -76.4801,
+      44.2821
     ],
     "mdb": "1433",
-    "vehiclesAtProbe": 58
+    "vehiclesAtProbe": 49
   },
   {
     "id": "london-transit-commission",
@@ -1056,50 +1060,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "London",
     "url": "http://gtfs.ltconline.ca/Vehicle/VehiclePositions.pb",
     "bbox": [
-      -81.3858,
-      42.8812,
-      -81.1228,
-      43.0953
+      -81.39,
+      42.881,
+      -81.1236,
+      43.0868
     ],
     "center": [
-      -81.2538,
-      42.9882
+      -81.2362,
+      42.9954
     ],
     "core": [
-      -81.3254,
-      42.9194,
-      -81.1637,
-      43.0468
+      -81.3558,
+      42.9189,
+      -81.1606,
+      43.0476
     ],
     "license": "https://www.londontransit.ca/open-data/ltcs-open-data-terms-of-use/",
     "mdb": "1561",
-    "vehiclesAtProbe": 64
+    "vehiclesAtProbe": 32
   },
   {
-    "id": "miway",
-    "provider": "MiWay",
+    "id": "miway-mississauga",
+    "provider": "MiWay (Mississauga)",
     "country": "CA",
     "region": "Mississauga",
     "url": "https://www.miapp.ca/GTFS_RT/Vehicle/VehiclePositions.pb",
     "bbox": [
-      -79.8178,
-      43.463,
-      -79.4882,
+      -79.8156,
+      43.4627,
+      -79.4884,
       43.8381
     ],
     "center": [
-      -79.6488,
-      43.594
+      -79.6465,
+      43.5939
     ],
     "core": [
-      -79.779,
-      43.5062,
-      -79.5242,
-      43.7343
+      -79.7705,
+      43.5144,
+      -79.5262,
+      43.7374
     ],
     "license": "http://www.mississauga.ca/portal/miway/developerdownload",
     "mdb": "1612",
-    "vehiclesAtProbe": 120
+    "vehiclesAtProbe": 67
   },
   {
     "id": "port-alberni",
@@ -1108,20 +1112,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Port Alberni",
     "url": "https://bct.tmix.se/gtfs-realtime/vehicleupdates.pb?operatorIds=11",
     "bbox": [
-      -124.8892,
-      49.2143,
-      -124.7826,
-      49.3143
+      -124.8505,
+      49.1948,
+      -124.7452,
+      49.2948
     ],
     "center": [
-      -124.8392,
-      49.2643
+      -124.7952,
+      49.2448
     ],
     "core": [
-      -124.8592,
-      49.2443,
-      -124.8192,
-      49.2843
+      -124.8152,
+      49.2248,
+      -124.7752,
+      49.2648
     ],
     "license": "https://www.bctransit.com/open-data/terms-of-use",
     "mdb": "1405",
@@ -1135,99 +1139,74 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "http://api.nextlift.ca/gtfs-realtime/vehicleupdates.pb",
     "bbox": [
       -89.3885,
-      48.3323,
-      -89.1377,
-      48.514
+      48.3364,
+      -89.1819,
+      48.4787
     ],
     "center": [
-      -89.2439,
+      -89.2374,
       48.4168
     ],
     "core": [
-      -89.2944,
-      48.3623,
-      -89.1677,
-      48.484
+      -89.2654,
+      48.3664,
+      -89.2164,
+      48.4376
     ],
     "mdb": "1690",
-    "vehiclesAtProbe": 17
+    "vehiclesAtProbe": 15
   },
   {
-    "id": "toronto-transit-commission-ttc",
-    "provider": "Toronto Transit Commission (TTC)",
+    "id": "ttc-toronto",
+    "provider": "TTC (Toronto)",
     "country": "CA",
     "region": "Toronto",
     "url": "https://bustime.ttc.ca/gtfsrt/vehicles",
     "bbox": [
-      -79.6595,
-      43.5659,
-      -79.1231,
+      -79.6543,
+      43.5624,
+      -79.1225,
       43.9097
     ],
     "center": [
-      -79.3916,
-      43.7004
+      -79.3845,
+      43.6925
     ],
     "core": [
-      -79.5656,
-      43.6191,
-      -79.2231,
-      43.8296
+      -79.5661,
+      43.617,
+      -79.221,
+      43.8295
     ],
-    "license": "https://open.toronto.ca/dataset/ttc-bustime-real-time-next-vehicle-arrival-nvas/",
+    "license": "https://open.toronto.ca/open-data-licence/",
     "mdb": "2140",
-    "vehiclesAtProbe": 1157
-  },
-  {
-    "id": "york-region-transit",
-    "provider": "York Region Transit",
-    "country": "CA",
-    "region": "York",
-    "url": "http://rtu.york.ca/gtfsrealtime/VehiclePositions",
-    "bbox": [
-      -79.7018,
-      43.7201,
-      -79.1818,
-      44.3518
-    ],
-    "center": [
-      -79.4509,
-      43.8415
-    ],
-    "core": [
-      -79.6423,
-      43.7553,
-      -79.2882,
-      44.0357
-    ],
-    "license": "https://www.yrt.ca/en/about-us/open-data-licence-agreement.aspx",
-    "mdb": "1750",
-    "vehiclesAtProbe": 76
+    "vehiclesAtProbe": 952
   },
   {
     "id": "yrtviva-york-region",
     "provider": "YRT/Viva (York Region)",
     "country": "CA",
-    "region": "",
+    "region": "York",
     "url": "https://rtu.york.ca/gtfsrealtime/VehiclePositions",
     "bbox": [
-      -79.7018,
-      43.7205,
-      -79.1818,
-      44.3518
+      -79.6998,
+      43.7159,
+      -79.163,
+      44.3213
     ],
     "center": [
-      -79.4512,
-      43.8402
+      -79.4376,
+      43.8251
     ],
     "core": [
-      -79.6431,
-      43.7558,
-      -79.287,
-      44.0357
+      -79.5868,
+      43.7535,
+      -79.2223,
+      43.9008
     ],
     "license": "https://www.yrt.ca/en/about-us/open-data-licence-agreement.aspx",
-    "vehiclesAtProbe": 76
+    "mdb": "1750",
+    "vehiclesAtProbe": 41
   },
   {
     "id": "prazska-integrovana-doprava-pid",
@@ -1242,18 +1221,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       50.9512
     ],
     "center": [
-      14.4513,
-      50.0768
+      14.4511,
+      50.077
     ],
     "core": [
-      14.0764,
-      49.8308,
-      14.9112,
-      50.2507
+      14.0661,
+      49.8521,
+      15.0661,
+      50.2637
     ],
     "license": "https://pid.cz/o-systemu/opendata/",
     "mdb": "2391",
-    "vehiclesAtProbe": 780
+    "vehiclesAtProbe": 880
   },
   {
     "id": "elron",
@@ -1262,23 +1241,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://jbb.ghsq.de/gtfs/elron/VehiclePositions",
     "bbox": [
-      24.0115,
-      58.0107,
-      27.6749,
-      59.4901
+      24.108,
+      58.4874,
+      26.8244,
+      59.4899
     ],
     "center": [
-      25.1554,
-      59.3439
+      24.8198,
+      59.312
     ],
     "core": [
-      24.0415,
-      58.0407,
-      27.6449,
-      59.4601
+      24.138,
+      58.5174,
+      26.7944,
+      59.4599
     ],
     "mdb": "3418",
-    "vehiclesAtProbe": 14
+    "vehiclesAtProbe": 19
   },
   {
     "id": "dbus-donostiabus",
@@ -1304,7 +1283,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     ],
     "license": "https://nap.transportes.gob.es/licencia-datos",
     "mdb": "3066",
-    "vehiclesAtProbe": 2
+    "vehiclesAtProbe": 0
   },
   {
     "id": "empresa-malaguena-de-transportes-emt",
@@ -1314,22 +1293,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://gtfs.emtmalaga.es/GTFSRTapi/api/vehicleposition",
     "bbox": [
       -4.5761,
-      36.6464,
-      -4.3313,
-      36.7829
+      36.646,
+      -4.3066,
+      36.8074
     ],
     "center": [
-      -4.4241,
-      36.7215
+      -4.4325,
+      36.7173
     ],
     "core": [
-      -4.4485,
-      36.6972,
-      -4.3613,
-      36.7529
+      -4.5155,
+      36.676,
+      -4.3366,
+      36.7774
     ],
     "mdb": "2213",
-    "vehiclesAtProbe": 3
+    "vehiclesAtProbe": 12
   },
   {
     "id": "empresa-municipal-de-transportes-de-fuen",
@@ -1338,20 +1317,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Fuenlabrada",
     "url": "https://api.control.optibus.co/opendata/v1/gtfs-rt/vehicle-positions?uid=c-5cfcd2d1",
     "bbox": [
-      -3.829,
-      40.2336,
-      -3.729,
-      40.3336
+      -3.8295,
+      40.2337,
+      -3.7295,
+      40.3337
     ],
     "center": [
-      -3.779,
-      40.2836
+      -3.7795,
+      40.2837
     ],
     "core": [
-      -3.799,
-      40.2636,
-      -3.759,
-      40.3036
+      -3.7995,
+      40.2637,
+      -3.7595,
+      40.3037
     ],
     "mdb": "2402",
     "vehiclesAtProbe": 1
@@ -1363,23 +1342,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Arroyo de la Encomienda",
     "url": "https://enzeyiwpoomhlxmcjivn.supabase.co/functions/v1/gtfs-rt",
     "bbox": [
-      -4.7722,
-      41.5553,
+      -4.7703,
+      41.5753,
       -4.6515,
-      41.6753
+      41.7076
     ],
     "center": [
-      -4.7015,
-      41.6253
+      -4.7018,
+      41.6254
     ],
     "core": [
-      -4.7422,
-      41.5853,
+      -4.7403,
+      41.6053,
       -4.6815,
-      41.6453
+      41.6776
     ],
     "mdb": "3511",
-    "vehiclesAtProbe": 8
+    "vehiclesAtProbe": 3
   },
   {
     "id": "metro-bilbao",
@@ -1388,24 +1367,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://ctb-gtfs-rt.s3.eu-south-2.amazonaws.com/metro-bilbao-vehicle-positions.pb",
     "bbox": [
-      -2.9634,
-      43.2043,
-      -2.8634,
-      43.3043
+      -3.0594,
+      43.2125,
+      -2.8831,
+      43.4004
     ],
     "center": [
-      -2.9134,
-      43.2543
+      -2.9647,
+      43.2807
     ],
     "core": [
-      -2.9334,
-      43.2343,
-      -2.8934,
-      43.2743
+      -3.0294,
+      43.2425,
+      -2.9131,
+      43.3704
     ],
     "license": "https://data.ctb.eus/en/pages/legal-notice",
     "mdb": "3058",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 5
   },
   {
     "id": "renfe-commuter-trains-cercanias",
@@ -1420,22 +1399,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       43.5895
     ],
     "center": [
-      -3.3353,
+      -3.3663,
       40.6443
     ],
     "core": [
-      -5.875,
+      -5.8387,
       37.3615,
-      2.2506,
-      43.3865
+      2.3067,
+      43.4023
     ],
     "license": "https://data.renfe.com/dataset/ubicacion-vehiculos",
     "mdb": "2835",
-    "vehiclesAtProbe": 136
+    "vehiclesAtProbe": 200
   },
   {
-    "id": "helsingin-seudun-liikenne",
-    "provider": "Helsingin seudun liikenne",
+    "id": "hsl-helsinki-region",
+    "provider": "HSL (Helsinki region)",
     "country": "FI",
     "region": "Helsinki",
     "url": "https://realtime.hsl.fi/realtime/vehicle-positions/v2/hsl",
@@ -1446,18 +1425,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       60.9763
     ],
     "center": [
-      24.9367,
-      60.208
+      24.9391,
+      60.2065
     ],
     "core": [
-      24.6444,
-      60.1345,
-      25.1196,
-      60.3445
+      24.6851,
+      60.1369,
+      25.1219,
+      60.3535
     ],
-    "license": "https://www.hsl.fi/en/hsl/open-data#gtfs-rt-ap-is",
+    "license": "https://www.hsl.fi/en/hsl/open-data",
     "mdb": "3229",
-    "vehiclesAtProbe": 376
+    "vehiclesAtProbe": 345
   },
   {
     "id": "car-jaune",
@@ -1466,24 +1445,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://pysae.com/api/v2/groups/car-jaune/gtfs-rt",
     "bbox": [
-      55.1723,
+      55.1866,
       -21.4285,
-      55.8422,
-      -20.8224
+      55.8466,
+      -20.8248
     ],
     "center": [
-      55.4706,
-      -21.0099
+      55.4713,
+      -21.0393
     ],
     "core": [
-      55.2282,
-      -21.3543,
-      55.7298,
+      55.228,
+      -21.3686,
+      55.7299,
       -20.8574
     ],
     "license": "https://transport.data.gouv.fr/datasets/horaires-theoriques-au-format-gtfs-et-horaires-temps-reel-au-format-gtfs-rt-du-reseau-car-jaune-a-la-reunion",
     "mdb": "2459",
-    "vehiclesAtProbe": 91
+    "vehiclesAtProbe": 34
   },
   {
     "id": "reseau-urbain-cap-cotentin",
@@ -1492,24 +1471,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Communauté d'agglomération Le Cotentin",
     "url": "https://pysae.com/api/v2/groups/transdev-cotentin/gtfs-rt",
     "bbox": [
-      -1.8622,
-      49.4553,
-      -1.3561,
-      49.7409
+      -1.6464,
+      49.5552,
+      -1.5333,
+      49.7008
     ],
     "center": [
-      -1.6403,
-      49.6415
+      -1.5833,
+      49.6508
     ],
     "core": [
-      -1.8249,
-      49.488,
-      -1.4587,
-      49.6819
+      -1.6164,
+      49.5852,
+      -1.5633,
+      49.6708
     ],
     "license": "https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf",
     "mdb": "1841",
-    "vehiclesAtProbe": 22
+    "vehiclesAtProbe": 2
   },
   {
     "id": "transports-bordeaux-metropole-tbm",
@@ -1518,24 +1497,52 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Bordeaux",
     "url": "https://bdx.mecatran.com/utw/ws/gtfsfeed/vehicles/bordeaux?apiKey=opendata-bordeaux-metropole-flux-gtfs-rt",
     "bbox": [
-      -0.8313,
-      44.7219,
-      -0.4456,
-      44.9737
+      -0.8314,
+      44.72,
+      -0.4244,
+      44.9796
     ],
     "center": [
-      -0.5821,
-      44.8371
+      -0.5824,
+      44.839
     ],
     "core": [
-      -0.7278,
-      44.766,
-      -0.5082,
-      44.9266
+      -0.7385,
+      44.7615,
+      -0.4992,
+      44.9394
     ],
     "license": "https://transport.data.gouv.fr/datasets/offres-de-services-bus-tram-et-scolaire-au-format-gtfs-gtfs-rt-siri-lite-1",
     "mdb": "2625",
-    "vehiclesAtProbe": 115
+    "vehiclesAtProbe": 66
+  },
+  {
+    "id": "bus-open-data-service-great-britain",
+    "provider": "Bus Open Data Service (Great Britain)",
+    "country": "GB",
+    "region": "Great Britain",
+    "url": "https://data.bus-data.dft.gov.uk/avl/download/gtfsrt",
+    "bbox": [
+      -8.7,
+      49.8,
+      1.9,
+      60.9
+    ],
+    "center": [
+      -0.2373,
+      51.5404
+    ],
+    "core": [
+      -2.9091,
+      50.9165,
+      0.1732,
+      53.8558
+    ],
+    "license": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "vehiclesAtProbe": 7937,
+    "format": "zip",
+    "ttlMs": 30000,
+    "defaultMode": "bus"
   },
   {
     "id": "azienda-del-consorzio-trasporti-venezian-3424",
@@ -1544,24 +1551,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Venice",
     "url": "https://tpl.actv.it/aut/GTFSRT/vehiclePositions",
     "bbox": [
-      11.8415,
+      11.8825,
       45.0446,
-      12.4277,
+      12.4274,
       45.6619
     ],
     "center": [
-      12.225,
-      45.4735
+      12.2693,
+      45.4853
     ],
     "core": [
-      12.0492,
-      45.1288,
-      12.359,
-      45.5326
+      12.0846,
+      45.3522,
+      12.3863,
+      45.6219
     ],
     "license": "https://actv.avmspa.it/it/content/catalogo-dei-dati-metadati-e-banche-dati-actv",
     "mdb": "3424",
-    "vehiclesAtProbe": 204
+    "vehiclesAtProbe": 103
   },
   {
     "id": "azienda-del-consorzio-trasporti-venezian",
@@ -1570,24 +1577,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Venice",
     "url": "https://tpl.actv.it/nav/GTFSRT/vehiclePositions",
     "bbox": [
-      12.2519,
+      12.2518,
       45.2237,
-      12.4754,
-      45.5382
+      12.4471,
+      45.5074
     ],
     "center": [
-      12.3294,
-      45.4356
+      12.3321,
+      45.4386
     ],
     "core": [
-      12.2821,
-      45.3975,
-      12.3887,
-      45.4752
+      12.2822,
+      45.401,
+      12.3875,
+      45.4747
     ],
     "license": "https://actv.avmspa.it/it/content/catalogo-dei-dati-metadati-e-banche-dati-actv",
     "mdb": "3422",
-    "vehiclesAtProbe": 29
+    "vehiclesAtProbe": 46
   },
   {
     "id": "cotral-busone",
@@ -1596,24 +1603,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Rome",
     "url": "https://proxy.busone.app/cotral/gtfs-rt/vehicle-positions.pb",
     "bbox": [
-      11.7666,
-      41.2026,
+      12.0166,
+      41.1634,
       28.1167,
       57.7746
     ],
     "center": [
-      12.6461,
-      41.9045
+      12.5781,
+      41.9327
     ],
     "core": [
-      12.08,
-      41.3278,
-      13.6286,
-      42.4258
+      12.1575,
+      41.6246,
+      13.3668,
+      42.3122
     ],
     "license": "https://proxy.busone.app/cotral/readme",
     "mdb": "3387",
-    "vehiclesAtProbe": 198
+    "vehiclesAtProbe": 44
+  },
+  {
+    "id": "gruppo-torinese-trasporti",
+    "provider": "Gruppo Torinese Trasporti",
+    "country": "IT",
+    "region": "Turin",
+    "url": "https://percorsieorari.gtt.to.it/das_gtfsrt/vehicle_position.aspx",
+    "bbox": [
+      7.4748,
+      44.9465,
+      7.8079,
+      45.1883
+    ],
+    "center": [
+      7.6662,
+      45.0704
+    ],
+    "core": [
+      7.5543,
+      44.9971,
+      7.7464,
+      45.144
+    ],
+    "license": "https://www.gtt.to.it/gtt_gtfs_license.html",
+    "mdb": "2696",
+    "vehiclesAtProbe": 145
   },
   {
     "id": "roma-servizi-per-la-mobilita",
@@ -1628,18 +1661,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       42.4415
     ],
     "center": [
-      12.4959,
-      41.8947
+      12.4995,
+      41.8921
     ],
     "core": [
-      12.3404,
-      41.7638,
-      12.6553,
-      41.991
+      12.34,
+      41.7569,
+      12.6643,
+      41.986
     ],
     "license": "https://romamobilita.it/it/tecnologie/open-data/dataset",
     "mdb": "1776",
-    "vehiclesAtProbe": 672
+    "vehiclesAtProbe": 481
   },
   {
     "id": "lanka-metro-transit",
@@ -1648,24 +1681,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Colombo",
     "url": "https://api.transit.seyone.dev/api/v1/realtime/vehicle-positions",
     "bbox": [
-      79.7984,
-      6.6643,
-      80.0445,
+      79.7947,
+      6.6676,
+      80.0333,
       7.1512
     ],
     "center": [
-      79.8837,
-      6.9108
+      79.8945,
+      6.9063
     ],
     "core": [
-      79.8317,
-      6.7649,
-      79.9958,
-      7.1178
+      79.831,
+      6.7045,
+      79.9941,
+      7.1056
     ],
     "license": "https://creativecommons.org/licenses/by/4.0/",
     "mdb": "3489",
-    "vehiclesAtProbe": 78
+    "vehiclesAtProbe": 53
   },
   {
     "id": "si-susisiekimo-paslaugos",
@@ -1674,23 +1707,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Vilnius",
     "url": "https://www.stops.lt/vilnius/vehicle_positions.pb",
     "bbox": [
-      25.0188,
-      54.5552,
+      25.0397,
+      54.5518,
       25.5165,
-      54.8561
+      54.8501
     ],
     "center": [
-      25.2732,
-      54.7
+      25.2764,
+      54.6966
     ],
     "core": [
-      25.1539,
-      54.6117,
-      25.4062,
-      54.7764
+      25.1555,
+      54.6173,
+      25.3994,
+      54.7684
     ],
     "mdb": "2383",
-    "vehiclesAtProbe": 236
+    "vehiclesAtProbe": 243
   },
   {
     "id": "regia-transport-electric-chisinau-im-par",
@@ -1702,46 +1735,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       28.6843,
       46.8832,
       29.109,
-      47.1471
+      47.1708
     ],
     "center": [
-      28.842,
-      47.0227
+      28.8399,
+      47.0237
     ],
     "core": [
-      28.7548,
-      46.9593,
-      28.9102,
-      47.0785
+      28.7617,
+      46.9613,
+      28.9099,
+      47.0752
     ],
     "mdb": "2342",
-    "vehiclesAtProbe": 114
-  },
-  {
-    "id": "ovapi",
-    "provider": "OVapi",
-    "country": "NL",
-    "region": "",
-    "url": "http://gtfs.ovapi.nl/nl/vehiclePositions.pb",
-    "bbox": [
-      -0.1265,
-      43.3033,
-      21.052,
-      55.6728
-    ],
-    "center": [
-      4.8247,
-      52.3401
-    ],
-    "core": [
-      4.3556,
-      51.8879,
-      5.3211,
-      52.531
-    ],
-    "license": "https://old.datahub.io/dataset/gtfs-nl",
-    "mdb": "1646",
-    "vehiclesAtProbe": 116
+    "vehiclesAtProbe": 187
   },
   {
     "id": "ovapi-all-of-the-netherlands",
@@ -1750,23 +1757,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://gtfs.ovapi.nl/nl/vehiclePositions.pb",
     "bbox": [
-      4.2703,
-      51.7853,
-      6.6419,
-      53.0991
+      3.2,
+      50.7,
+      7.3,
+      53.7
     ],
     "center": [
-      4.8247,
-      52.3401
+      4.8377,
+      52.3527
     ],
     "core": [
-      4.3556,
-      51.8879,
-      5.3211,
-      52.531
+      4.5197,
+      52.1046,
+      6.4538,
+      53.162
     ],
     "license": "https://gtfs.ovapi.nl/README",
-    "vehiclesAtProbe": 116
+    "mdb": "1646",
+    "vehiclesAtProbe": 119
   },
   {
     "id": "entur-all-of-norway",
@@ -1778,23 +1786,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       "ET-Client-Name": "osiris-transit"
     },
     "bbox": [
-      5.4041,
-      57.9754,
-      23.7314,
-      70.6829
+      4.5,
+      57.9,
+      31.2,
+      71.2
     ],
     "center": [
-      10.3571,
-      59.9308
+      10.9806,
+      60.5263
     ],
     "core": [
-      5.899,
-      58.1076,
-      19.0976,
-      69.7193
+      5.726,
+      58.1212,
+      19.6365,
+      69.7204
     ],
     "license": "https://developer.entur.org/pages-intro-authentication",
-    "vehiclesAtProbe": 689
+    "vehiclesAtProbe": 539
   },
   {
     "id": "go-ahead",
@@ -1809,18 +1817,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       78.2468
     ],
     "center": [
-      6.1386,
-      58.9596
+      17.8124,
+      65.8993
     ],
     "core": [
-      5.7206,
-      58.5096,
-      9.184,
-      59.4107
+      4.5128,
+      53.5519,
+      31.112,
+      78.2468
     ],
     "license": "https://data.norge.no/nlod/en/",
     "mdb": "1797",
-    "vehiclesAtProbe": 3
+    "vehiclesAtProbe": 0
   },
   {
     "id": "vy-buss-se",
@@ -1835,18 +1843,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       78.2468
     ],
     "center": [
-      15.8974,
-      59.4358
+      16.5467,
+      59.3734
     ],
     "core": [
-      10.6841,
-      55.6248,
-      17.9551,
-      59.6683
+      12.6368,
+      55.6107,
+      18.0279,
+      59.6697
     ],
     "license": "https://data.norge.no/nlod/en/",
     "mdb": "1801",
-    "vehiclesAtProbe": 11
+    "vehiclesAtProbe": 12
   },
   {
     "id": "vy-express",
@@ -1861,18 +1869,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       78.2468
     ],
     "center": [
-      10.9045,
-      60.1816
+      10.8664,
+      60.1926
     ],
     "core": [
-      6.5981,
-      59.1475,
-      11.2114,
-      62.6404
+      5.7121,
+      59.2261,
+      11.2273,
+      63.172
     ],
     "license": "https://data.norge.no/nlod/en/",
     "mdb": "1803",
-    "vehiclesAtProbe": 13
+    "vehiclesAtProbe": 17
   },
   {
     "id": "pks-w-rzeszowie-sa",
@@ -1881,24 +1889,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://www.mpkrzeszow.pl/gtfs-pks/rt/gtfsrt.pb",
     "bbox": [
-      21.7859,
-      49.8288,
-      22.2466,
-      50.2103
+      21.8212,
+      49.8202,
+      22.2233,
+      50.2881
     ],
     "center": [
-      22.0044,
-      50.0423
+      22.004,
+      50.0422
     ],
     "core": [
-      21.8273,
-      49.9031,
-      22.1576,
-      50.1786
+      21.8779,
+      49.9958,
+      22.1933,
+      50.2581
     ],
     "license": "https://www.mpkrzeszow.pl/otwartedane/",
     "mdb": "3428",
-    "vehiclesAtProbe": 22
+    "vehiclesAtProbe": 20
   },
   {
     "id": "rzeszowski-transport-miejski",
@@ -1907,20 +1915,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://www.mpkrzeszow.pl/gtfs/rt/gtfsrt.pb",
     "bbox": [
-      21.7861,
-      49.8989,
-      22.1198,
-      50.1726
+      21.8419,
+      49.8805,
+      22.1166,
+      50.1689
     ],
     "center": [
-      22.008,
-      50.0368
+      21.9998,
+      50.0417
     ],
     "core": [
-      21.9135,
-      49.9666,
-      22.0866,
-      50.1265
+      21.914,
+      49.9291,
+      22.065,
+      50.1108
     ],
     "license": "https://www.mpkrzeszow.pl/otwartedane/",
     "mdb": "3429",
@@ -1936,21 +1944,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       14.3098,
       53.2825,
       14.7951,
-      53.6166
+      53.6025
     ],
     "center": [
-      14.5504,
-      53.4328
+      14.5527,
+      53.432
     ],
     "core": [
-      14.466,
-      53.3581,
-      14.7198,
-      53.5666
+      14.4678,
+      53.3478,
+      14.7095,
+      53.556
     ],
     "license": "https://creativecommons.org/publicdomain/zero/1.0/",
     "mdb": "1968",
-    "vehiclesAtProbe": 135
+    "vehiclesAtProbe": 124
   },
   {
     "id": "zarzad-transportu-miejskiego-poznan-ztm-",
@@ -1962,21 +1970,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       16.4812,
       52.1517,
       17.2769,
-      52.5872
+      52.6
     ],
     "center": [
-      16.917,
-      52.4079
+      16.9175,
+      52.4073
     ],
     "core": [
-      16.7836,
-      52.3278,
-      17.0235,
-      52.485
+      16.8083,
+      52.3343,
+      17.0222,
+      52.4852
     ],
     "license": "https://www.ztm.poznan.pl/otwarte-dane/dla-deweloperow/",
     "mdb": "2335",
-    "vehiclesAtProbe": 259
+    "vehiclesAtProbe": 227
   },
   {
     "id": "zarzad-transportu-publicznego-w-krakowie",
@@ -1985,24 +1993,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Kraków",
     "url": "https://gtfs.ztp.krakow.pl/VehiclePositions_T.pb",
     "bbox": [
-      19.8393,
+      19.8384,
       49.9627,
-      20.1408,
-      50.1541
+      20.1683,
+      50.1542
     ],
     "center": [
-      19.9606,
-      50.0639
+      19.9587,
+      50.0649
     ],
     "core": [
       19.8938,
-      49.9953,
-      20.0851,
-      50.1164
+      49.9939,
+      20.0866,
+      50.122
     ],
     "license": "https://ztp.krakow.pl",
     "mdb": "2340",
-    "vehiclesAtProbe": 103
+    "vehiclesAtProbe": 74
   },
   {
     "id": "zarzad-transportu-publicznego-w-krakowie-2601",
@@ -2017,18 +2025,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       50.2452
     ],
     "center": [
-      19.9486,
-      50.0662
+      19.9491,
+      50.0651
     ],
     "core": [
-      19.798,
-      49.9789,
-      20.0882,
-      50.1272
+      19.8057,
+      49.9734,
+      20.0943,
+      50.1247
     ],
     "license": "https://ztp.krakow.pl/",
     "mdb": "2601",
-    "vehiclesAtProbe": 350
+    "vehiclesAtProbe": 329
   },
   {
     "id": "carris",
@@ -2037,23 +2045,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Lisbon",
     "url": "https://gateway.carris.pt/gateway/gtfs/api/v2.11/GTFS/realtime/vehiclepositions",
     "bbox": [
-      -9.2528,
-      38.654,
-      -9.053,
-      38.8373
+      -9.2753,
+      38.6473,
+      -9.0591,
+      38.8404
     ],
     "center": [
-      -9.1467,
-      38.7384
+      -9.149,
+      38.7382
     ],
     "core": [
-      -9.2161,
-      38.6844,
-      -9.083,
-      38.8073
+      -9.2287,
+      38.6837,
+      -9.0957,
+      38.8063
     ],
     "mdb": "2930",
-    "vehiclesAtProbe": 20
+    "vehiclesAtProbe": 26
   },
   {
     "id": "carris-metropolitana",
@@ -2068,18 +2076,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       39.0883
     ],
     "center": [
-      -9.1624,
-      38.6862
+      -9.1634,
+      38.7664
     ],
     "core": [
-      -9.2844,
-      38.5447,
-      -8.8678,
-      38.8399
+      -9.3249,
+      38.5353,
+      -8.975,
+      38.8821
     ],
     "license": "https://github.com/carrismetropolitana/gtfs",
     "mdb": "2028",
-    "vehiclesAtProbe": 15
+    "vehiclesAtProbe": 36
   },
   {
     "id": "asociatia-de-dezvoltare-intercomunitara-",
@@ -2094,17 +2102,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       44.7506
     ],
     "center": [
-      26.0901,
-      44.433
+      26.0945,
+      44.4326
     ],
     "core": [
-      25.9805,
-      44.3591,
-      26.2115,
-      44.5431
+      25.993,
+      44.3585,
+      26.1929,
+      44.5118
     ],
     "mdb": "2104",
-    "vehiclesAtProbe": 364
+    "vehiclesAtProbe": 464
   },
   {
     "id": "compania-de-transport-public-cluj-napoca",
@@ -2119,17 +2127,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       46.8983
     ],
     "center": [
-      23.5965,
+      23.5901,
       46.7712
     ],
     "core": [
-      23.5333,
-      46.7297,
-      23.6548,
-      46.8073
+      23.5226,
+      46.7284,
+      23.6668,
+      46.808
     ],
     "mdb": "2614",
-    "vehiclesAtProbe": 54
+    "vehiclesAtProbe": 71
   },
   {
     "id": "compania-de-transport-public-iasi",
@@ -2139,22 +2147,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://iasi-rt-feed.gtfs.ro/vehiclePositions",
     "bbox": [
       27.4461,
-      47.0406,
+      47.0467,
       27.8242,
-      47.3187
+      47.2879
     ],
     "center": [
-      27.586,
-      47.1634
+      27.5874,
+      47.1602
     ],
     "core": [
-      27.4926,
-      47.0944,
-      27.6557,
-      47.1986
+      27.5118,
+      47.1092,
+      27.6452,
+      47.2001
     ],
     "mdb": "2118",
-    "vehiclesAtProbe": 66
+    "vehiclesAtProbe": 77
   },
   {
     "id": "transbus-buzau",
@@ -2169,14 +2177,14 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       45.3375
     ],
     "center": [
-      26.8351,
-      45.1346
+      26.7997,
+      45.1387
     ],
     "core": [
-      26.8151,
-      45.1146,
-      26.8551,
-      45.1546
+      26.7797,
+      45.1187,
+      26.8197,
+      45.1587
     ],
     "mdb": "2113",
     "vehiclesAtProbe": 1
@@ -2188,24 +2196,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Lviv",
     "url": "https://track.ua-gis.com/gtfs/lviv/vehicle_position",
     "bbox": [
-      23.8417,
-      49.7329,
-      24.1526,
-      49.952
+      23.8235,
+      49.733,
+      24.1977,
+      49.9546
     ],
     "center": [
-      24.0197,
-      49.8346
+      24.0218,
+      49.8335
     ],
     "core": [
-      23.9112,
-      49.7679,
-      24.0898,
-      49.8936
+      23.9122,
+      49.768,
+      24.0972,
+      49.8942
     ],
     "license": "https://opendata.city-adm.lviv.ua/ne/dataset/lviv-public-transport-gtfs-real-time/resource/d45fd95a-ffc9-45b1-be05-52012707d51f?inner_span=True",
     "mdb": "2376",
-    "vehiclesAtProbe": 221
+    "vehiclesAtProbe": 357
   },
   {
     "id": "arlington-transit",
@@ -2214,23 +2222,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Arlington",
     "url": "https://realtime.arlingtontransit.com/gtfsrt/vehicles",
     "bbox": [
-      -77.1831,
-      38.7946,
-      -77.0205,
-      38.948
+      -77.2558,
+      38.7947,
+      -77.0034,
+      38.9466
     ],
     "center": [
-      -77.0821,
-      38.8589
+      -77.0834,
+      38.8461
     ],
     "core": [
-      -77.1531,
-      38.8246,
-      -77.0505,
-      38.918
+      -77.2258,
+      38.8247,
+      -77.0334,
+      38.9166
     ],
     "mdb": "1790",
-    "vehiclesAtProbe": 14
+    "vehiclesAtProbe": 13
   },
   {
     "id": "beach-cities-transit",
@@ -2239,24 +2247,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Redondo Beach",
     "url": "https://redondobeachbct.com/gtfs-rt/vehiclepositions",
     "bbox": [
-      -118.4369,
+      -118.465,
       33.8161,
-      -118.3365,
-      33.9811
+      -118.3527,
+      33.9494
     ],
     "center": [
-      -118.3865,
-      33.9311
+      -118.415,
+      33.8945
     ],
     "core": [
-      -118.4069,
-      33.8827,
-      -118.3665,
-      33.9511
+      -118.435,
+      33.8745,
+      -118.395,
+      33.9145
     ],
     "license": "https://www.redondo.org/depts/recreation/transit/trip_planner/gtfs_data.asp",
     "mdb": "1566",
-    "vehiclesAtProbe": 2
+    "vehiclesAtProbe": 1
   },
   {
     "id": "ben-franklin-transit",
@@ -2266,22 +2274,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://myride.bft.org/Realtime/GTFS_VehiclePositions.pb",
     "bbox": [
       -119.7888,
-      46.1485,
-      -118.9949,
-      46.351
+      46.1373,
+      -119.043,
+      46.3538
     ],
     "center": [
-      -119.2161,
-      46.2417
+      -119.1812,
+      46.2325
     ],
     "core": [
-      -119.3209,
-      46.1827,
-      -119.0411,
-      46.3131
+      -119.3824,
+      46.1673,
+      -119.073,
+      46.3238
     ],
     "mdb": "2125",
-    "vehiclesAtProbe": 28
+    "vehiclesAtProbe": 19
   },
   {
     "id": "big-blue-bus",
@@ -2318,21 +2326,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -80.4285,
       25.7618,
-      -80.0473,
-      26.3839
+      -80.055,
+      26.3509
     ],
     "center": [
-      -80.2018,
-      26.1368
+      -80.2048,
+      26.0254
     ],
     "core": [
-      -80.3502,
-      25.9412,
-      -80.0836,
-      26.3284
+      -80.3564,
+      25.9588,
+      -80.085,
+      26.2823
     ],
     "mdb": "3475",
-    "vehiclesAtProbe": 57
+    "vehiclesAtProbe": 10
   },
   {
     "id": "capital-area-transportation-authority",
@@ -2344,17 +2352,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       -84.6306,
       42.5657,
       -84.174,
-      42.7761
+      42.7813
     ],
     "center": [
-      -84.4772,
-      42.7261
+      -84.4749,
+      42.7313
     ],
     "core": [
-      -84.4977,
-      42.706,
-      -84.4572,
-      42.7461
+      -84.5139,
+      42.7026,
+      -84.4549,
+      42.7513
     ],
     "license": "https://www.cata.org/Portals/0/CATAGTFSLicenseAgreement20150323.pdf",
     "mdb": "1424",
@@ -2369,48 +2377,48 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -74.0101,
       42.4671,
-      -73.6133,
-      43.1424
+      -73.6146,
+      43.1294
     ],
     "center": [
-      -73.7816,
-      42.7088
+      -73.7834,
+      42.6962
     ],
     "core": [
-      -73.9644,
-      42.63,
-      -73.659,
-      42.8626
+      -73.966,
+      42.617,
+      -73.6541,
+      43.0994
     ],
     "license": "https://www.cdta.org/developer-license-agreement/169",
     "mdb": "2700",
-    "vehiclesAtProbe": 42
+    "vehiclesAtProbe": 15
   },
   {
-    "id": "capital-metro",
-    "provider": "Capital Metro",
+    "id": "capmetro-austin",
+    "provider": "CapMetro (Austin)",
     "country": "US",
     "region": "Austin",
     "url": "https://data.texas.gov/download/eiei-9rpf/application%2Foctet-stream",
     "bbox": [
       -97.9911,
-      30.1013,
+      30.1076,
       -97.3704,
       30.5879
     ],
     "center": [
-      -97.7165,
-      30.2657
+      -97.7146,
+      30.2653
     ],
     "core": [
-      -97.8118,
-      30.1653,
-      -97.6446,
-      30.4384
+      -97.8024,
+      30.1828,
+      -97.645,
+      30.4398
     ],
-    "license": "https://www.capmetro.org/metrolabs/",
+    "license": "https://www.capmetro.org/developertools",
     "mdb": "1427",
-    "vehiclesAtProbe": 285
+    "vehiclesAtProbe": 239
   },
   {
     "id": "cecil-transit",
@@ -2446,21 +2454,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -81.6768,
       28.1093,
-      -81.1972,
+      -81.2053,
       28.815
     ],
     "center": [
-      -81.4478,
-      28.479
+      -81.4433,
+      28.4971
     ],
     "core": [
-      -81.5575,
-      28.3493,
-      -81.2752,
-      28.6173
+      -81.5708,
+      28.3746,
+      -81.2871,
+      28.617
     ],
     "mdb": "1766",
-    "vehiclesAtProbe": 50
+    "vehiclesAtProbe": 17
   },
   {
     "id": "central-ohio-transit-authority",
@@ -2496,22 +2504,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/vehicle/vehiclepositions.pb",
     "bbox": [
       -84.7939,
-      39.025,
+      39.0515,
       -84.2599,
       39.3572
     ],
     "center": [
-      -84.5133,
-      39.1441
+      -84.511,
+      39.1359
     ],
     "core": [
-      -84.6293,
-      39.0864,
-      -84.3751,
-      39.2777
+      -84.6347,
+      39.0816,
+      -84.3545,
+      39.2762
     ],
     "mdb": "1489",
-    "vehiclesAtProbe": 61
+    "vehiclesAtProbe": 38
   },
   {
     "id": "clackco-connects-clackamas-county",
@@ -2536,7 +2544,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       45.436
     ],
     "mdb": "2744",
-    "vehiclesAtProbe": 3
+    "vehiclesAtProbe": 0
   },
   {
     "id": "commerce-municipal-bus-lines",
@@ -2546,22 +2554,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://citycommbus.com/gtfs-rt/vehiclepositions",
     "bbox": [
       -118.2643,
-      33.9656,
-      -118.1192,
-      34.0898
+      33.9511,
+      -118.1077,
+      34.0631
     ],
     "center": [
-      -118.1736,
-      34.0295
+      -118.1577,
+      34.0011
     ],
     "core": [
-      -118.2289,
-      34.0054,
-      -118.1492,
-      34.0598
+      -118.1777,
+      33.9811,
+      -118.1377,
+      34.0211
     ],
     "mdb": "1794",
-    "vehiclesAtProbe": 4
+    "vehiclesAtProbe": 1
   },
   {
     "id": "community-transit",
@@ -2570,24 +2578,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Washington",
     "url": "https://s3.amazonaws.com/commtrans-realtime-prod/vehiclepositions.pb",
     "bbox": [
-      -122.433,
+      -122.4335,
       47.5921,
       -121.601,
-      48.2937
+      48.2785
     ],
     "center": [
-      -122.2394,
-      47.8578
+      -122.2488,
+      47.8502
     ],
     "core": [
-      -122.3876,
-      47.7441,
-      -121.9917,
-      48.1747
+      -122.403,
+      47.7464,
+      -122.0781,
+      48.1686
     ],
     "license": "https://www.communitytransit.org/OpenData",
     "mdb": "1448",
-    "vehiclesAtProbe": 77
+    "vehiclesAtProbe": 54
   },
   {
     "id": "connecticut-transit",
@@ -2597,23 +2605,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://cttprdtmgtfs.ctttrpcloud.com/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.pb",
     "bbox": [
       -73.7737,
-      40.9976,
+      40.998,
       -71.7945,
       42.0208
     ],
     "center": [
-      -72.8107,
-      41.6312
+      -72.865,
+      41.556
     ],
     "core": [
-      -73.5613,
-      41.028,
-      -72.63,
-      41.8551
+      -73.0611,
+      41.2645,
+      -72.6577,
+      41.7923
     ],
     "license": "https://www.cttransit.com/about/developers/terms-of-use",
     "mdb": "2422",
-    "vehiclesAtProbe": 101
+    "vehiclesAtProbe": 50
   },
   {
     "id": "des-moines-area-regional-transit-authori",
@@ -2622,24 +2630,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Des Moines",
     "url": "https://www.ridedart.com/gtfs/real-time/vehicle-positions",
     "bbox": [
-      -93.8574,
-      41.4619,
-      -93.462,
+      -93.8327,
+      41.5118,
+      -93.4665,
       41.7329
     ],
     "center": [
-      -93.6248,
-      41.5886
+      -93.6345,
+      41.587
     ],
     "core": [
-      -93.8274,
-      41.4919,
-      -93.492,
-      41.6934
+      -93.6545,
+      41.567,
+      -93.6145,
+      41.607
     ],
     "license": "https://www.ridedart.com/open-data-policy-and-terms-use",
     "mdb": "1771",
-    "vehiclesAtProbe": 17
+    "vehiclesAtProbe": 1
   },
   {
     "id": "duluth-transit",
@@ -2649,23 +2657,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://duluthtransit.com/gtfsrt/Vehicle/VehiclePositions.pb",
     "bbox": [
       -92.2908,
-      46.6433,
+      46.6547,
       -92.0096,
-      46.8722
+      46.8554
     ],
     "center": [
-      -92.104,
-      46.7843
+      -92.1502,
+      46.7551
     ],
     "core": [
-      -92.231,
-      46.6733,
-      -92.0544,
-      46.8422
+      -92.2908,
+      46.6547,
+      -92.0096,
+      46.8554
     ],
     "license": "https://www.duluthtransit.com/home/doing-business/developer-resources/",
     "mdb": "1461",
-    "vehiclesAtProbe": 10
+    "vehiclesAtProbe": 0
   },
   {
     "id": "el-paso-transportation-authority",
@@ -2699,24 +2707,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Emeryville",
     "url": "https://emerygoround.tripshot.com/v1/gtfs/realtime/feed/egr?types=VehiclePosition",
     "bbox": [
-      -122.3581,
+      -122.3446,
       37.7792,
-      -122.2169,
-      37.895
+      -122.2173,
+      37.896
     ],
     "center": [
-      -122.2795,
-      37.8371
+      -122.2699,
+      37.8299
     ],
     "core": [
-      -122.3281,
+      -122.3146,
       37.8092,
-      -122.2469,
-      37.865
+      -122.2473,
+      37.866
     ],
     "license": "https://www.foothilltransit.org/about/developer-resources/developer-license-agreement/",
     "mdb": "2227",
-    "vehiclesAtProbe": 6
+    "vehiclesAtProbe": 3
   },
   {
     "id": "everett-transit",
@@ -2725,24 +2733,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Everett",
     "url": "https://everett.mapstrat.com/current/gtfrealtime_VehiclePositions.bin",
     "bbox": [
-      -122.3107,
-      47.858,
-      -122.1429,
-      48.0558
+      -122.3064,
+      47.8581,
+      -122.1428,
+      48.0536
     ],
     "center": [
-      -122.1947,
-      47.9744
+      -122.1945,
+      47.9743
     ],
     "core": [
-      -122.2806,
-      47.8882,
-      -122.1729,
-      48.0254
+      -122.2494,
+      47.8881,
+      -122.1728,
+      48.0236
     ],
     "license": "https://www.soundtransit.org/help-contacts/business-information/open-transit-data-otd/transit-data-terms-use",
     "mdb": "3074",
-    "vehiclesAtProbe": 25
+    "vehiclesAtProbe": 18
   },
   {
     "id": "foothill-transit",
@@ -2804,22 +2812,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -81.9674,
       41.2278,
-      -81.4274,
-      41.6595
+      -81.4136,
+      41.6371
     ],
     "center": [
       -81.6535,
-      41.484
+      41.4806
     ],
     "core": [
-      -81.8047,
-      41.3948,
-      -81.5114,
-      41.5522
+      -81.8259,
+      41.4036,
+      -81.524,
+      41.5527
     ],
     "license": "https://www.riderta.com/developers",
     "mdb": "3410",
-    "vehiclesAtProbe": 213
+    "vehiclesAtProbe": 145
   },
   {
     "id": "greater-portland-metro-bus",
@@ -2829,23 +2837,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://gtfsrt.gptd.cadavl.com/ProfilGtfsRt2_0RSProducer-GPTD/VehiclePosition.pb",
     "bbox": [
       -70.4482,
-      43.5972,
+      43.5966,
       -69.9625,
       43.9138
     ],
     "center": [
-      -70.276,
-      43.6472
+      -70.2778,
+      43.6469
     ],
     "core": [
-      -70.296,
-      43.6272,
-      -70.256,
-      43.6672
+      -70.2979,
+      43.6266,
+      -70.2578,
+      43.6669
     ],
     "license": "https://www.gpmetro.org/about-us/projects-initiatives/developers/",
     "mdb": "2645",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 2
   },
   {
     "id": "intercity-transit",
@@ -2855,22 +2863,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://its.rideralerts.com/InfoPoint/GTFS-Realtime.ashx?Type=VehiclePosition",
     "bbox": [
       -123.0271,
-      46.8835,
-      -122.4544,
-      47.1982
+      46.8985,
+      -122.4831,
+      47.1609
     ],
     "center": [
-      -122.8317,
-      47.0422
+      -122.8734,
+      47.042
     ],
     "core": [
-      -122.9544,
-      46.9629,
-      -122.5593,
-      47.1053
+      -122.9962,
+      46.9707,
+      -122.7423,
+      47.0917
     ],
     "mdb": "1537",
-    "vehiclesAtProbe": 40
+    "vehiclesAtProbe": 37
   },
   {
     "id": "king-county-metro",
@@ -2886,17 +2894,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     ],
     "center": [
       -122.3134,
-      47.6125
+      47.6152
     ],
     "core": [
-      -122.3968,
-      47.3525,
-      -122.1246,
-      47.7592
+      -122.3962,
+      47.3381,
+      -122.1138,
+      47.7543
     ],
     "license": "https://kingcounty.gov/depts/transportation/metro/travel-options/bus/app-center/developer-resources/terms-of-use.aspx",
     "mdb": "1542",
-    "vehiclesAtProbe": 331
+    "vehiclesAtProbe": 263
   },
   {
     "id": "knoxville-area-transit-kat",
@@ -2907,22 +2915,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -84.1031,
       35.9063,
-      -83.8178,
-      36.0804
+      -83.8387,
+      36.0448
     ],
     "center": [
-      -83.8967,
-      35.9848
+      -83.9139,
+      35.9792
     ],
     "core": [
-      -83.9338,
-      35.9584,
-      -83.8478,
-      36.0504
+      -83.9339,
+      35.9592,
+      -83.8939,
+      35.9992
     ],
     "license": "https://www.knoxvilletn.gov/government/opendata/knoxville_area_transit_kat_gtfs_feed",
     "mdb": "3513",
-    "vehiclesAtProbe": 3
+    "vehiclesAtProbe": 1
   },
   {
     "id": "maryland-transit-administration",
@@ -2937,21 +2945,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       39.5581
     ],
     "center": [
-      -76.6895,
-      39.2577
+      -77.0174,
+      39.2286
     ],
     "core": [
-      -76.7095,
-      39.2377,
-      -76.6695,
-      39.2777
+      -77.9617,
+      38.899,
+      -76.0732,
+      39.5581
     ],
     "mdb": "1619",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 0
   },
   {
-    "id": "massachusetts-bay-transportation-authori",
-    "provider": "Massachusetts Bay Transportation Authority (MBTA)",
+    "id": "mbta-boston",
+    "provider": "MBTA (Boston)",
     "country": "US",
     "region": "Boston",
     "url": "https://cdn.mbta.com/realtime/VehiclePositions.pb",
@@ -2962,18 +2970,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       42.7978
     ],
     "center": [
-      -71.0818,
-      42.351
+      -71.0834,
+      42.3477
     ],
     "core": [
-      -71.2107,
-      42.2209,
-      -70.972,
-      42.4463
+      -71.2056,
+      42.1819,
+      -70.9716,
+      42.4469
     ],
-    "license": "https://www.mass.gov/files/documents/2017/10/27/develop_license_agree_0.pdf",
+    "license": "https://www.mbta.com/developers",
     "mdb": "1602",
-    "vehiclesAtProbe": 309
+    "vehiclesAtProbe": 278
   },
   {
     "id": "merced-county-transit-the-bus",
@@ -2985,20 +2993,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       -121.0202,
       36.9645,
       -120.248,
-      37.5571
+      37.5218
     ],
     "center": [
-      -120.5153,
-      37.306
+      -120.6341,
+      37.2431
     ],
     "core": [
-      -120.8787,
-      37.2745,
-      -120.4607,
-      37.5271
+      -121.0202,
+      36.9645,
+      -120.248,
+      37.5218
     ],
     "mdb": "1506",
-    "vehiclesAtProbe": 5
+    "vehiclesAtProbe": 0
   },
   {
     "id": "metro-st-louis",
@@ -3007,50 +3015,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "St. Louis",
     "url": "https://www.metrostlouis.org/RealTimeData/StlRealTimeVehicles.pb",
     "bbox": [
-      -90.7061,
-      38.4697,
-      -89.8609,
-      38.8497
+      -90.6621,
+      38.4638,
+      -89.8747,
+      38.8381
     ],
     "center": [
-      -90.2537,
-      38.6462
+      -90.2588,
+      38.6522
     ],
     "core": [
-      -90.4646,
-      38.5324,
-      -90.011,
-      38.7709
+      -90.4259,
+      38.5451,
+      -89.9913,
+      38.793
     ],
     "license": "https://www.metrostlouis.org/developer-resources/",
     "mdb": "1414",
-    "vehiclesAtProbe": 76
-  },
-  {
-    "id": "metro-transit",
-    "provider": "Metro Transit",
-    "country": "US",
-    "region": "Minneapolis",
-    "url": "https://svc.metrotransit.org/mtgtfs/vehiclepositions.pb",
-    "bbox": [
-      -94.1574,
-      44.725,
-      -92.8059,
-      45.5601
-    ],
-    "center": [
-      -93.2525,
-      44.9519
-    ],
-    "core": [
-      -93.3595,
-      44.8346,
-      -93.0387,
-      45.0724
-    ],
-    "license": "https://svc.metrotransit.org",
-    "mdb": "1683",
-    "vehiclesAtProbe": 189
+    "vehiclesAtProbe": 56
   },
   {
     "id": "metro-transit-city-of-madison",
@@ -3059,24 +3041,50 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Madison",
     "url": "https://metromap.cityofmadison.com/gtfsrt/vehicles",
     "bbox": [
-      -89.5783,
-      42.966,
+      -89.5639,
+      42.9877,
       -89.2448,
-      43.2029
+      43.2032
     ],
     "center": [
-      -89.4016,
-      43.0736
+      -89.3681,
+      43.0845
     ],
     "core": [
-      -89.5481,
-      43.0144,
-      -89.2874,
-      43.1617
+      -89.4486,
+      43.02,
+      -89.296,
+      43.173
     ],
     "license": "http://www.cityofmadison.com/metro/Apps/developers.cfm",
     "mdb": "2097",
-    "vehiclesAtProbe": 40
+    "vehiclesAtProbe": 23
+  },
+  {
+    "id": "metro-transit-minneapolisst-paul",
+    "provider": "Metro Transit (Minneapolis–St Paul)",
+    "country": "US",
+    "region": "Minneapolis",
+    "url": "https://svc.metrotransit.org/mtgtfs/vehiclepositions.pb",
+    "bbox": [
+      -94.1574,
+      44.7255,
+      -92.8059,
+      45.5601
+    ],
+    "center": [
+      -93.2519,
+      44.9553
+    ],
+    "core": [
+      -93.3566,
+      44.8399,
+      -93.0051,
+      45.061
+    ],
+    "license": "https://svc.metrotransit.org/",
+    "mdb": "1683",
+    "vehiclesAtProbe": 145
   },
   {
     "id": "metropolitan-atlanta-rapid-transit-autho",
@@ -3087,21 +3095,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -84.6698,
       33.4324,
-      -84.075,
-      34.1356
+      -84.0834,
+      34.1362
     ],
     "center": [
-      -84.3756,
-      33.7542
+      -84.4081,
+      33.7467
     ],
     "core": [
-      -84.5409,
-      33.5848,
-      -84.1637,
-      33.9645
+      -84.5493,
+      33.5939,
+      -84.1796,
+      33.9322
     ],
     "mdb": "1601",
-    "vehiclesAtProbe": 137
+    "vehiclesAtProbe": 86
   },
   {
     "id": "metropolitan-transit-authority-mta",
@@ -3112,22 +3120,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -74.0529,
       40.5402,
-      -71.9539,
+      -71.9039,
       41.0997
     ],
     "center": [
-      -73.7002,
+      -73.7505,
       40.7486
     ],
     "core": [
-      -74.0229,
-      40.6293,
-      -73.0523,
-      40.873
+      -74.0097,
+      40.6022,
+      -73.0859,
+      40.8834
     ],
     "license": "https://api.mta.info/#/DataFeedAgreement",
     "mdb": "1624",
-    "vehiclesAtProbe": 59
+    "vehiclesAtProbe": 53
   },
   {
     "id": "metropolitan-transit-authority-mta-1630",
@@ -3343,24 +3351,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Milwaukee",
     "url": "https://realtime.ridemcts.com/gtfsrt/vehicles",
     "bbox": [
-      -88.115,
-      42.8708,
-      -87.8281,
+      -88.1202,
+      42.8519,
+      -87.8156,
       43.3842
     ],
     "center": [
-      -87.9391,
-      43.0457
+      -87.9473,
+      43.0599
     ],
     "core": [
-      -88.0662,
-      42.9393,
-      -87.875,
-      43.1612
+      -88.0657,
+      42.9622,
+      -87.868,
+      43.1686
     ],
     "license": "https://www.ridemcts.com/policies/developer-terms",
     "mdb": "2130",
-    "vehiclesAtProbe": 102
+    "vehiclesAtProbe": 83
   },
   {
     "id": "monroe-county-transportation-authority-m",
@@ -3394,23 +3402,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Montebello",
     "url": "https://mbl.rideralerts.com/InfoPoint/GTFS-Realtime.ashx?Type=VehiclePosition",
     "bbox": [
-      -118.3061,
+      -118.2664,
       33.8917,
-      -117.9924,
-      34.1288
+      -117.9947,
+      34.111
     ],
     "center": [
-      -118.1087,
-      34.0186
+      -118.1243,
+      34.0122
     ],
     "core": [
-      -118.2438,
-      33.96,
-      -118.0224,
-      34.0988
+      -118.2043,
+      33.9777,
+      -118.0345,
+      34.0728
     ],
     "mdb": "2218",
-    "vehiclesAtProbe": 20
+    "vehiclesAtProbe": 9
   },
   {
     "id": "mountain-line-transit",
@@ -3420,22 +3428,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "url": "https://mountainline.syncromatics.com/gtfs-rt/vehiclepositions",
     "bbox": [
       -111.7197,
-      35.1281,
-      -111.5305,
+      35.1603,
+      -111.5734,
       35.3302
     ],
     "center": [
-      -111.6455,
-      35.1943
+      -111.6465,
+      35.2452
     ],
     "core": [
-      -111.6827,
-      35.1581,
-      -111.5605,
-      35.2387
+      -111.7197,
+      35.1603,
+      -111.5734,
+      35.3302
     ],
     "mdb": "1980",
-    "vehiclesAtProbe": 13
+    "vehiclesAtProbe": 0
   },
   {
     "id": "mountain-view-transportation-management-",
@@ -3464,6 +3472,32 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "vehiclesAtProbe": 0
   },
   {
+    "id": "mta-new-york-city-buses",
+    "provider": "MTA New York City buses",
+    "country": "US",
+    "region": "New York City",
+    "url": "https://gtfsrt.prod.obanyc.com/vehiclePositions",
+    "bbox": [
+      -74.3,
+      40.48,
+      -73.68,
+      40.95
+    ],
+    "center": [
+      -73.9254,
+      40.7179
+    ],
+    "core": [
+      -74.0562,
+      40.5813,
+      -73.7603,
+      40.8776
+    ],
+    "license": "https://new.mta.info/developers/terms-and-conditions",
+    "vehiclesAtProbe": 719,
+    "defaultMode": "bus"
+  },
+  {
     "id": "nashville-mta-wego-public-transit",
     "provider": "Nashville MTA WeGo Public Transit",
     "country": "US",
@@ -3476,18 +3510,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       36.525
     ],
     "center": [
-      -86.7566,
-      36.1577
+      -86.7568,
+      36.1579
     ],
     "core": [
-      -86.8537,
-      36.0787,
-      -86.657,
-      36.2947
+      -86.8646,
+      36.0595,
+      -86.6541,
+      36.2504
     ],
     "license": "https://www.wegotransit.com/contact-us/data-request-submission/",
     "mdb": "1622",
-    "vehiclesAtProbe": 100
+    "vehiclesAtProbe": 68
   },
   {
     "id": "ny-waterway",
@@ -3502,14 +3536,14 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       41.5058
     ],
     "center": [
-      -74.0038,
-      40.7609
+      -74.0068,
+      40.7748
     ],
     "core": [
-      -74.0238,
-      40.7409,
-      -73.9838,
-      40.7809
+      -74.0268,
+      40.7548,
+      -73.9868,
+      40.7948
     ],
     "mdb": "3199",
     "vehiclesAtProbe": 1
@@ -3579,18 +3613,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       40.2066
     ],
     "center": [
-      -104.9855,
-      39.7542
+      -104.985,
+      39.7483
     ],
     "core": [
-      -105.2681,
-      39.5908,
-      -104.7899,
-      40.0369
+      -105.2691,
+      39.5937,
+      -104.7641,
+      40.0401
     ],
     "license": "https://www.rtd-denver.com/business-center/open-spatial-data/gtfs-realtime-license-agreement",
     "mdb": "1678",
-    "vehiclesAtProbe": 328
+    "vehiclesAtProbe": 258
   },
   {
     "id": "rhode-island-public-transit-authority",
@@ -3605,17 +3639,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       42.017
     ],
     "center": [
-      -71.4066,
-      41.8244
+      -71.3179,
+      41.8129
     ],
     "core": [
-      -71.5135,
-      41.4716,
-      -71.2601,
-      41.9802
+      -71.3821,
+      41.4711,
+      -71.2979,
+      41.8329
     ],
     "mdb": "1662",
-    "vehiclesAtProbe": 15
+    "vehiclesAtProbe": 2
   },
   {
     "id": "riverside-transit-agency",
@@ -3624,23 +3658,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Riverside",
     "url": "https://rtabus.com/gtfsrt/vehicles",
     "bbox": [
-      -117.9155,
+      -117.9659,
       33.4523,
       -116.8758,
       34.1001
     ],
     "center": [
-      -117.351,
-      33.9176
+      -117.3513,
+      33.9839
     ],
     "core": [
-      -117.5787,
-      33.6782,
-      -116.9867,
+      -117.4045,
+      33.7158,
+      -116.9908,
       34.0045
     ],
     "mdb": "1665",
-    "vehiclesAtProbe": 117
+    "vehiclesAtProbe": 95
   },
   {
     "id": "rochester-genesee-regional-transportatio",
@@ -3655,17 +3689,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       43.2973
     ],
     "center": [
-      -77.6083,
-      43.1582
+      -77.6956,
+      43.1619
     ],
     "core": [
-      -77.6588,
-      43.0872,
-      -77.4882,
-      43.2139
+      -77.7704,
+      43.0757,
+      -77.5531,
+      43.2262
     ],
     "mdb": "1775",
-    "vehiclesAtProbe": 29
+    "vehiclesAtProbe": 3
   },
   {
     "id": "rogue-valley-transportation-district",
@@ -3699,20 +3733,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Sandy",
     "url": "https://passio3.com/sandyor/passioTransit/gtfs/realtime/vehiclePositions",
     "bbox": [
-      -122.4279,
+      -122.6179,
       45.2859,
       -121.709,
       45.503
     ],
     "center": [
-      -122.2587,
-      45.4308
+      -122.2813,
+      45.4357
     ],
     "core": [
-      -122.3467,
-      45.377,
-      -122.2387,
-      45.4508
+      -122.5879,
+      45.3815,
+      -122.2613,
+      45.4557
     ],
     "mdb": "2747",
     "vehiclesAtProbe": 2
@@ -3724,24 +3758,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Santa Cruz",
     "url": "https://rt.scmetro.org/gtfsrt/vehicles",
     "bbox": [
-      -122.1674,
-      36.8596,
-      -121.7084,
-      37.2792
+      -122.173,
+      36.8597,
+      -121.7087,
+      37.3666
     ],
     "center": [
-      -122.0253,
-      36.9784
+      -122.0242,
+      36.9814
     ],
     "core": [
-      -122.1345,
+      -122.0784,
       36.8916,
-      -121.74,
-      37.1321
+      -121.7397,
+      37.3237
     ],
     "license": "https://scmtd.com/en/riders-guide/google-transit/gtfs-dev-data",
     "mdb": "1910",
-    "vehiclesAtProbe": 53
+    "vehiclesAtProbe": 40
   },
   {
     "id": "shore-transit",
@@ -3766,7 +3800,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       38.0946
     ],
     "mdb": "3443",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 0
   },
   {
     "id": "south-bend-public-transportation-corpora",
@@ -3802,21 +3836,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -123.035,
       44.9378,
-      -122.5988,
-      45.398
+      -122.6916,
+      45.3947
     ],
     "center": [
-      -122.6488,
-      45.348
+      -122.8633,
+      45.1662
     ],
     "core": [
-      -122.6688,
-      45.328,
-      -122.6288,
-      45.368
+      -123.035,
+      44.9378,
+      -122.6916,
+      45.3947
     ],
     "mdb": "2707",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 0
   },
   {
     "id": "southeastern-pennsylvania-transportation",
@@ -3825,24 +3859,24 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "Philadelphia",
     "url": "https://www3.septa.org/gtfsrt/septarail-pa-us/Vehicle/rtVehiclePosition.pb",
     "bbox": [
-      -75.8038,
+      -75.7636,
       39.6706,
-      -74.755,
+      -74.7049,
       40.3064
     ],
     "center": [
-      -75.1662,
-      39.9699
+      -75.1616,
+      40.1116
     ],
     "core": [
-      -75.3913,
-      39.8837,
-      -75.1169,
-      40.1212
+      -75.4706,
+      39.7799,
+      -74.7349,
+      40.2378
     ],
     "license": "https://www3.septa.org/developer/",
     "mdb": "3060",
-    "vehiclesAtProbe": 41
+    "vehiclesAtProbe": 21
   },
   {
     "id": "southeastern-pennsylvania-transportation-3063",
@@ -3858,17 +3892,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     ],
     "center": [
       -75.1808,
-      40.0017
+      39.9835
     ],
     "core": [
-      -75.3231,
-      39.8945,
-      -75.0543,
-      40.1214
+      -75.3218,
+      39.8944,
+      -75.0542,
+      40.1208
     ],
     "license": "https://www3.septa.org/developer/",
     "mdb": "3063",
-    "vehiclesAtProbe": 721
+    "vehiclesAtProbe": 636
   },
   {
     "id": "spirit-bus",
@@ -3908,18 +3942,18 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       39.8986
     ],
     "center": [
-      -89.6429,
-      39.7922
+      -89.6433,
+      39.7915
     ],
     "core": [
-      -89.6632,
+      -89.6633,
       39.7715,
-      -89.6214,
-      39.8212
+      -89.6233,
+      39.8115
     ],
     "license": "https://www.smtd.org/gtfs-information/",
     "mdb": "1781",
-    "vehiclesAtProbe": 7
+    "vehiclesAtProbe": 1
   },
   {
     "id": "stanislaus-regional-transit-authority-st",
@@ -3934,17 +3968,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       37.9549
     ],
     "center": [
-      -120.9915,
-      37.642
+      -120.9481,
+      37.6387
     ],
     "core": [
-      -121.0648,
-      37.4867,
-      -120.8935,
-      37.7169
+      -121.6483,
+      37.4872,
+      -120.8435,
+      37.7534
     ],
     "mdb": "1614",
-    "vehiclesAtProbe": 24
+    "vehiclesAtProbe": 4
   },
   {
     "id": "staten-island-railway",
@@ -3985,17 +4019,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       42.5907
     ],
     "center": [
-      -76.4853,
-      42.4398
+      -76.4817,
+      42.4516
     ],
     "core": [
-      -76.5217,
-      42.4186,
-      -76.4612,
-      42.4743
+      -76.5178,
+      42.4174,
+      -76.4541,
+      42.4768
     ],
     "mdb": "1649",
-    "vehiclesAtProbe": 7
+    "vehiclesAtProbe": 6
   },
   {
     "id": "transit-authority-of-river-city-tarc",
@@ -4010,17 +4044,17 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       38.3833
     ],
     "center": [
-      -85.7971,
-      38.2459
+      -85.7688,
+      38.2451
     ],
     "core": [
-      -85.855,
-      38.1354,
-      -85.7384,
-      38.2945
+      -85.7897,
+      38.2238,
+      -85.7488,
+      38.2651
     ],
     "mdb": "2665",
-    "vehiclesAtProbe": 7
+    "vehiclesAtProbe": 2
   },
   {
     "id": "university-of-minnesota",
@@ -4035,14 +4069,14 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       45.5601
     ],
     "center": [
-      -93.2307,
-      44.9778
+      -93.2287,
+      44.9736
     ],
     "core": [
-      -93.2656,
-      44.9506,
-      -93.2028,
-      45.0022
+      -93.2657,
+      44.9503,
+      -93.2057,
+      44.9986
     ],
     "mdb": "3528",
     "vehiclesAtProbe": 4
@@ -4056,22 +4090,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       -112.8722,
       32.3827,
-      -111.638,
+      -111.6347,
       33.7433
     ],
     "center": [
-      -112.0566,
-      33.447
+      -112.0506,
+      33.4483
     ],
     "core": [
-      -112.2486,
-      33.3295,
-      -111.7682,
-      33.6601
+      -112.2477,
+      33.3573,
+      -111.7187,
+      33.6605
     ],
     "license": "https://phoenixopendata.com/dataset/valley-metro-bus-schedule/resource/28ccc0a5-49c8-495c-b91f-193de5ce2cb7",
     "mdb": "1722",
-    "vehiclesAtProbe": 539
+    "vehiclesAtProbe": 380
   },
   {
     "id": "valley-regional-transit",
@@ -4097,7 +4131,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     ],
     "license": "https://www.valleyregionaltransit.org/about-us/resources/",
     "mdb": "2454",
-    "vehiclesAtProbe": 1
+    "vehiclesAtProbe": 0
   },
   {
     "id": "via-mobility",
@@ -4109,20 +4143,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       -105.5948,
       39.9304,
       -105.1694,
-      40.0701
+      40.0633
     ],
     "center": [
-      -105.2537,
-      40.0201
+      -105.3821,
+      39.9969
     ],
     "core": [
-      -105.283,
-      39.9971,
-      -105.2337,
-      40.0401
+      -105.5948,
+      39.9304,
+      -105.1694,
+      40.0633
     ],
     "mdb": "2398",
-    "vehiclesAtProbe": 2
+    "vehiclesAtProbe": 0
   },
   {
     "id": "votran",
@@ -4157,23 +4191,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://autolineefederico.selfip.com:8080/gtfs-rt/vehicle_positions.pb",
     "bbox": [
-      15.5873,
-      37.882,
-      16.6617,
-      38.8901
+      15.9444,
+      38.4279,
+      16.6377,
+      38.9625
     ],
     "center": [
-      16.2616,
-      38.2315
+      16.5476,
+      38.6559
     ],
     "core": [
-      15.6178,
-      37.9275,
-      16.5908,
-      38.847
+      15.9744,
+      38.4579,
+      16.6077,
+      38.9325
     ],
     "mdb": "3118",
-    "vehiclesAtProbe": 23
+    "vehiclesAtProbe": 3
   },
   {
     "id": "basmy-alor-setar",
@@ -4182,20 +4216,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-alor-setar",
     "bbox": [
-      100.297,
-      5.5623,
+      100.2883,
+      5.5389,
       100.6599,
-      6.3089
+      6.3185
     ],
     "center": [
-      100.3767,
-      6.1165
+      100.4138,
+      6.1067
     ],
     "core": [
-      100.3339,
-      5.619,
-      100.5538,
-      6.2581
+      100.3334,
+      5.6188,
+      100.5408,
+      6.2777
     ],
     "mdb": "3168",
     "vehiclesAtProbe": 43
@@ -4207,20 +4241,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-johor",
     "bbox": [
-      103.5265,
-      1.3286,
-      103.9511,
-      1.7604
+      103.5222,
+      1.3101,
+      103.9859,
+      1.7791
     ],
     "center": [
-      103.7529,
-      1.495
+      103.7567,
+      1.4948
     ],
     "core": [
-      103.5715,
-      1.4358,
-      103.9058,
-      1.6739
+      103.565,
+      1.4359,
+      103.9196,
+      1.6759
     ],
     "mdb": "3174",
     "vehiclesAtProbe": 78
@@ -4232,23 +4266,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-kangar",
     "bbox": [
-      100.0819,
-      6.0777,
-      100.4931,
-      6.7143
+      100.0893,
+      6.0726,
+      100.4783,
+      6.6997
     ],
     "center": [
-      100.3185,
-      6.4355
+      100.2706,
+      6.4309
     ],
     "core": [
-      100.1272,
-      6.1289,
-      100.4463,
-      6.6842
+      100.1624,
+      6.1201,
+      100.4452,
+      6.6613
     ],
     "mdb": "3167",
-    "vehiclesAtProbe": 22
+    "vehiclesAtProbe": 23
   },
   {
     "id": "basmy-kota-bharu",
@@ -4257,23 +4291,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-kota-bharu",
     "bbox": [
-      101.7971,
-      4.7766,
-      102.6489,
+      101.8093,
+      4.9089,
+      102.6486,
       6.2829
     ],
     "center": [
-      102.2396,
-      6.0791
+      102.2394,
+      6.0993
     ],
     "core": [
-      101.9556,
-      5.6736,
-      102.4363,
-      6.2033
+      101.9529,
+      5.7059,
+      102.463,
+      6.2291
     ],
     "mdb": "3169",
-    "vehiclesAtProbe": 61
+    "vehiclesAtProbe": 59
   },
   {
     "id": "basmy-kuala-terengganu",
@@ -4284,21 +4318,21 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "bbox": [
       102.8987,
       5.0207,
-      103.2557,
+      103.2556,
       5.5829
     ],
     "center": [
-      103.1368,
-      5.3317
+      103.1371,
+      5.3281
     ],
     "core": [
-      102.991,
-      5.0507,
-      103.2257,
-      5.4683
+      102.9911,
+      5.185,
+      103.2238,
+      5.4703
     ],
     "mdb": "3170",
-    "vehiclesAtProbe": 26
+    "vehiclesAtProbe": 28
   },
   {
     "id": "basmy-kuching",
@@ -4310,20 +4344,20 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       110.1048,
       1.116,
       110.6167,
-      1.698
+      1.7094
     ],
     "center": [
-      110.3423,
-      1.5462
+      110.3422,
+      1.5374
     ],
     "core": [
-      110.1998,
-      1.2906,
-      110.5015,
-      1.6372
+      110.2377,
+      1.2884,
+      110.4761,
+      1.6229
     ],
     "mdb": "3152",
-    "vehiclesAtProbe": 45
+    "vehiclesAtProbe": 43
   },
   {
     "id": "basmy-melaka",
@@ -4332,23 +4366,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-melaka",
     "bbox": [
-      102.0683,
-      2.1417,
-      102.3902,
-      2.4321
+      102.0476,
+      2.1375,
+      102.4116,
+      2.5119
     ],
     "center": [
-      102.2418,
-      2.243
+      102.2482,
+      2.2376
     ],
     "core": [
-      102.1811,
-      2.1796,
-      102.3249,
-      2.4018
+      102.138,
+      2.1739,
+      102.3117,
+      2.4816
     ],
     "mdb": "3173",
-    "vehiclesAtProbe": 24
+    "vehiclesAtProbe": 31
   },
   {
     "id": "basmy-seremban-a",
@@ -4357,23 +4391,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-seremban-a",
     "bbox": [
-      101.6375,
-      2.5388,
-      102.1429,
-      2.9025
+      101.6314,
+      2.4177,
+      102.2814,
+      2.8995
     ],
     "center": [
-      101.8141,
-      2.8043
+      101.9045,
+      2.7255
     ],
     "core": [
-      101.6675,
-      2.5688,
-      102.1129,
-      2.8725
+      101.6659,
+      2.5131,
+      102.1659,
+      2.8429
     ],
     "mdb": "3171",
-    "vehiclesAtProbe": 8
+    "vehiclesAtProbe": 22
   },
   {
     "id": "basmy-seremban-b",
@@ -4382,23 +4416,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://api.data.gov.my/gtfs-realtime/vehicle-position/mybas-seremban-b",
     "bbox": [
-      101.7464,
-      2.4737,
-      102.455,
-      2.962
+      101.7422,
+      2.3978,
+      102.4545,
+      2.9551
     ],
     "center": [
-      101.9824,
-      2.7153
+      101.9926,
+      2.7208
     ],
     "core": [
-      101.7764,
-      2.5037,
-      102.425,
-      2.932
+      101.7726,
+      2.5043,
+      102.4232,
+      2.8553
     ],
     "mdb": "3172",
-    "vehiclesAtProbe": 15
+    "vehiclesAtProbe": 24
   },
   {
     "id": "butte-regional-transit-b-line",
@@ -4423,7 +4457,7 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
       39.767
     ],
     "mdb": "2428",
-    "vehiclesAtProbe": 4
+    "vehiclesAtProbe": 0
   },
   {
     "id": "champaign-urbana-mass-transit-district",
@@ -4432,49 +4466,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://gtfs-rt.mtd.org/vehicle-positions",
     "bbox": [
-      -88.3307,
-      40.019,
-      -88.1223,
-      40.1984
+      -88.3056,
+      40.0197,
+      -88.1457,
+      40.1927
     ],
     "center": [
-      -88.224,
-      40.111
+      -88.23,
+      40.1103
     ],
     "core": [
-      -88.2965,
-      40.0549,
-      -88.1678,
-      40.1517
+      -88.2702,
+      40.0708,
+      -88.1836,
+      40.1434
     ],
     "mdb": "2889",
-    "vehiclesAtProbe": 26
-  },
-  {
-    "id": "guelph-transit",
-    "provider": "Guelph Transit",
-    "country": "",
-    "region": "",
-    "url": "https://glphprdtmgtfs.glphtrpcloud.com/tmgtfsrealtimewebservice/vehicle/vehiclepositions.pb",
-    "bbox": [
-      -80.3433,
-      43.4414,
-      -80.1445,
-      43.6237
-    ],
-    "center": [
-      -80.2408,
-      43.5375
-    ],
-    "core": [
-      -80.3097,
-      43.479,
-      -80.1789,
-      43.5873
-    ],
-    "license": "https://explore.guelph.ca/pages/terms-of-use",
-    "mdb": "2592",
-    "vehiclesAtProbe": 30
+    "vehiclesAtProbe": 21
   },
   {
     "id": "motionbuscard",
@@ -4483,23 +4491,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "http://20.19.98.194:8328/Api/api/gtfs-realtime",
     "bbox": [
-      32.3107,
-      34.601,
-      34.1179,
+      32.3461,
+      34.6014,
+      34.1155,
       35.2226
     ],
     "center": [
-      33.3591,
-      35.0079
+      33.3581,
+      34.987
     ],
     "core": [
-      32.4076,
-      34.6531,
-      34.0764,
-      35.1898
+      32.4021,
+      34.6496,
+      34.0587,
+      35.1904
     ],
     "mdb": "1920",
-    "vehiclesAtProbe": 136
+    "vehiclesAtProbe": 154
   },
   {
     "id": "tango-bus",
@@ -4508,24 +4516,49 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "http://185.220.72.38:8085/ProfilGtfsRt2_0RSProducer-TANGO/VehiclePosition.pb",
     "bbox": [
-      4.2227,
-      43.652,
-      4.5629,
-      44.0104
+      4.2737,
+      43.7734,
+      4.3737,
+      43.8734
     ],
     "center": [
-      4.3655,
-      43.8322
+      4.3237,
+      43.8234
     ],
     "core": [
       4.3037,
-      43.7131,
-      4.5329,
-      43.9804
+      43.8034,
+      4.3437,
+      43.8434
     ],
     "license": "https://www.data.gouv.fr/pages/legal/licences/etalab-2.0",
     "mdb": "3466",
-    "vehiclesAtProbe": 20
+    "vehiclesAtProbe": 1
+  },
+  {
+    "id": "tep-parma",
+    "provider": "TEP PARMA",
+    "country": "",
+    "region": "",
+    "url": "https://s3.eu-south-1.amazonaws.com/temporeale.cl.tep.pr.it/temporeale/vehicle_positions.pb",
+    "bbox": [
+      10.2277,
+      44.7202,
+      10.4062,
+      44.896
+    ],
+    "center": [
+      10.3347,
+      44.7969
+    ],
+    "core": [
+      10.2577,
+      44.7502,
+      10.3762,
+      44.866
+    ],
+    "mdb": "3452",
+    "vehiclesAtProbe": 10
   },
   {
     "id": "tukebusz",
@@ -4534,23 +4567,23 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "http://menobusz.tukebusz.hu:30080/mobilapp/GTFS/RTx_positions.x",
     "bbox": [
-      18.138,
-      45.9879,
-      18.3902,
-      46.17
+      18.1386,
+      45.9826,
+      18.3934,
+      46.1771
     ],
     "center": [
-      18.2249,
-      46.0718
+      18.2304,
+      46.072
     ],
     "core": [
-      18.1685,
-      46.0184,
-      18.2992,
-      46.115
+      18.174,
+      46.0156,
+      18.3325,
+      46.1319
     ],
     "mdb": "3120",
-    "vehiclesAtProbe": 28
+    "vehiclesAtProbe": 21
   },
   {
     "id": "university-of-georgia",
@@ -4559,22 +4592,22 @@ export const TRANSIT_FEEDS: TransitFeed[] = [
     "region": "",
     "url": "https://passio3.com/uga/passioTransit/gtfs/realtime/vehiclePositions",
     "bbox": [
-      -83.4295,
-      33.8797,
-      -83.3231,
-      34.0051
+      -83.4281,
+      33.8779,
+      -83.3256,
+      34.0077
     ],
     "center": [
-      -83.3759,
-      33.9529
+      -83.3756,
+      33.9577
     ],
     "core": [
-      -83.3995,
-      33.9097,
-      -83.3531,
-      33.9751
+      -83.3981,
+      33.9079,
+      -83.3556,
+      33.9777
     ],
     "mdb": "2619",
-    "vehiclesAtProbe": 3
+    "vehiclesAtProbe": 2
   }
 ];

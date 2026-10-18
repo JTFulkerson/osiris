@@ -8,12 +8,22 @@
  */
 import { decodeVehicleFeed } from './gtfs-rt';
 import { TRANSIT_FEEDS } from './transit-feeds.generated';
+import { KEYED_TRANSIT_FEEDS } from './transit-feeds-keyed';
+import { routeFor, timetableModeFor } from './transit-routes';
+import { unzipFirstEntry } from './zip';
 import { bboxIntersects, inBBox, type BBox, type TransitFeed, type TransitFeedInfo, type TransitVehicle } from './transit';
 
 const FEED_TTL_MS = 20_000;
 /** A feed that failed is left alone this long before it is tried again. */
 const FAILURE_TTL_MS = 60_000;
-const FETCH_TIMEOUT_MS = 10_000;
+const FETCH_TIMEOUT_MS = 20_000;
+/** The nationwide files run to a few megabytes, and Great Britain's sometimes takes half a minute to be handed out. */
+const ZIP_FETCH_TIMEOUT_MS = 45_000;
+/**
+ * A read this recent is still shown while the next one is fetched, so a slow
+ * operator never holds up the map; only a feed nobody has watched lately waits.
+ */
+const SERVE_STALE_MS = 2 * 60_000;
 /** Positions older than this are a vehicle that has gone out of service, not one on the road. */
 const STALE_S = 15 * 60;
 /** Feed reads in flight at once. */
@@ -37,7 +47,43 @@ interface Entry {
 const cache = new Map<string, Entry>();
 const inflight = new Map<string, Promise<Entry>>();
 
-export const FEEDS: TransitFeed[] = TRANSIT_FEEDS;
+/**
+ * Each feed's last few fixes per vehicle, so a map opened now can play a
+ * vehicle from where it was a minute ago instead of waiting for the next poll.
+ * Held only for the feeds being read, and only for the vehicles in the latest
+ * read of each, so it grows with what people watch, not with the catalogue.
+ */
+const history = new Map<string, Map<string, { trip?: string; fixes: [number, number, number][] }>>();
+/** Earlier fixes kept per vehicle. */
+const HISTORY_FIXES = 3;
+/** Older than this, a held fix is no use to playback. */
+const HISTORY_MAX_AGE_S = 300;
+
+/** Gives each vehicle its earlier fixes in the same trip, and records this one. */
+function withHistory(feedId: string, vehicles: TransitVehicle[], nowS: number): void {
+  const before = history.get(feedId);
+  const after = new Map<string, { trip?: string; fixes: [number, number, number][] }>();
+  for (const v of vehicles) {
+    let held = before?.get(v.id);
+    // A new trip starts a new line; the old one would be drawn as a jump anyway.
+    if (held && held.trip && v.trip && held.trip !== v.trip) held = undefined;
+    const prior = (held?.fixes ?? []).filter(([t]) => (!v.t || t < v.t) && nowS - t <= HISTORY_MAX_AGE_S).slice(-HISTORY_FIXES);
+    if (prior.length) v.h = prior;
+    const fixes = v.t ? [...prior, [v.t, v.lat, v.lng] as [number, number, number]] : prior;
+    after.set(v.id, { trip: v.trip, fixes: fixes.slice(-HISTORY_FIXES) });
+  }
+  history.set(feedId, after);
+}
+
+/**
+ * The feeds this server can read: every keyless one, and each keyed one whose
+ * key is set in the environment.
+ */
+export function activeFeeds(env: Record<string, string | undefined> = process.env): TransitFeed[] {
+  return [...TRANSIT_FEEDS, ...KEYED_TRANSIT_FEEDS.filter(f => f.key && env[f.key.env])];
+}
+
+export const FEEDS: TransitFeed[] = activeFeeds();
 
 export function feedInfo(f: TransitFeed): TransitFeedInfo {
   return { id: f.id, provider: f.provider, region: f.region, country: f.country, ...(f.license ? { license: f.license } : {}) };
@@ -47,27 +93,61 @@ function padded(b: number[]): BBox {
   return [b[0] - AREA_SLACK_DEG, b[1] - AREA_SLACK_DEG, b[2] + AREA_SLACK_DEG, b[3] + AREA_SLACK_DEG];
 }
 
-/** Reads one feed, or returns the shared copy while it is fresh. */
+/**
+ * The request for a feed, its key put where the operator wants it, or null
+ * when the feed needs a key this server does not have.
+ */
+export function requestFor(feed: TransitFeed, env: Record<string, string | undefined> = process.env): { url: string; headers: Record<string, string> } | null {
+  const headers: Record<string, string> = { 'User-Agent': UA, ...(feed.headers ?? {}) };
+  if (!feed.key) return { url: feed.url, headers };
+  const key = env[feed.key.env];
+  if (!key) return null;
+  if (feed.key.header) headers[feed.key.header] = `${feed.key.prefix ?? ''}${key}`;
+  let url = feed.url;
+  if (feed.key.query) {
+    const u = new URL(feed.url);
+    u.searchParams.set(feed.key.query, key);
+    url = u.toString();
+  }
+  return { url, headers };
+}
+
+/**
+ * Reads one feed, or returns the shared copy while it is fresh. Once it is
+ * not, a recent copy is still returned at once and the fresh read lands in
+ * the cache for the next poll.
+ */
 export async function readFeed(feed: TransitFeed, fetchImpl: typeof fetch = fetch, now = Date.now()): Promise<Entry> {
   const hit = cache.get(feed.id);
-  if (hit && now - hit.at < (hit.ok ? FEED_TTL_MS : FAILURE_TTL_MS)) return hit;
-  const running = inflight.get(feed.id);
-  if (running) return running;
+  if (hit && now - hit.at < (hit.ok ? feed.ttlMs ?? FEED_TTL_MS : FAILURE_TTL_MS)) return hit;
+  const running = inflight.get(feed.id) ?? refresh(feed, fetchImpl, hit);
+  if (hit && hit.vehicles.length && now - hit.at < SERVE_STALE_MS) return hit;
+  return running;
+}
 
+/** Fetches a feed into the cache; nothing need wait on it for the read to land. */
+function refresh(feed: TransitFeed, fetchImpl: typeof fetch, hit: Entry | undefined): Promise<Entry> {
   const job = (async (): Promise<Entry> => {
+    const nowS = Date.now() / 1000;
     try {
-      const res = await fetchImpl(feed.url, {
-        headers: { 'User-Agent': UA, ...(feed.headers ?? {}) },
-        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      });
+      const req = requestFor(feed);
+      if (!req) throw new Error('no key configured');
+      const timeout = feed.format === 'zip' ? ZIP_FETCH_TIMEOUT_MS : FETCH_TIMEOUT_MS;
+      const res = await fetchImpl(req.url, { headers: req.headers, signal: AbortSignal.timeout(timeout) });
+      // A refused key is the most likely failure of a keyed feed; say which it is.
+      if (res.status === 401 || res.status === 403) throw new Error(feed.key ? `key refused (HTTP ${res.status})` : `HTTP ${res.status}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const decoded = decodeVehicleFeed(new Uint8Array(await res.arrayBuffer()));
+      const body = Buffer.from(await res.arrayBuffer());
+      const decoded = decodeVehicleFeed(feed.format === 'zip' ? unzipFirstEntry(body) : body);
       const area = padded(feed.bbox);
-      const nowS = Date.now() / 1000;
+      const feedMode = timetableModeFor(feed) ?? feed.defaultMode;
       const vehicles: TransitVehicle[] = [];
       for (const v of decoded.vehicles) {
         if (v.timestamp && nowS - v.timestamp > STALE_S) continue;
         if (!inBBox(v.lng, v.lat, area)) continue;
+        const route = v.routeId ? routeFor(feed, v.routeId) : undefined;
+        // The route's own type, else what the feed's timetable mostly runs, else what the feed is known for.
+        const mode = route?.mode ?? feedMode;
         vehicles.push({
           f: feed.id,
           id: v.id,
@@ -76,28 +156,32 @@ export async function readFeed(feed: TransitFeed, fetchImpl: typeof fetch = fetc
           ...(v.bearing !== undefined ? { b: Math.round(v.bearing) } : {}),
           ...(v.speed !== undefined ? { s: Math.round(v.speed * 10) / 10 } : {}),
           ...(v.routeId ? { route: v.routeId } : {}),
+          ...(route?.name ? { name: route.name } : {}),
+          ...(mode ? { mode } : {}),
           ...(v.label ? { label: v.label } : {}),
           ...(v.tripId ? { trip: v.tripId } : {}),
           ...(v.timestamp ? { t: v.timestamp } : {}),
           ...(v.occupancy !== undefined ? { occ: v.occupancy } : {}),
         });
       }
+      withHistory(feed.id, vehicles, nowS);
       return { at: Date.now(), ok: true, vehicles };
     } catch (e) {
       const error = e instanceof Error ? (e.name === 'TimeoutError' ? 'timeout' : e.message) : 'failed';
-      // Keep the last good positions on a failed read, marked as such, rather than blanking a city.
-      return { at: Date.now(), ok: false, vehicles: hit?.ok ? hit.vehicles : [], error };
+      // Keep the last positions through a failed read, marked as such, rather
+      // than blanking a city; they age out like any other position.
+      const kept = (hit?.vehicles ?? []).filter(v => !v.t || nowS - v.t <= STALE_S);
+      return { at: Date.now(), ok: false, vehicles: kept, error };
     }
   })();
 
-  inflight.set(feed.id, job);
-  try {
-    const entry = await job;
+  const landed = job.then(entry => {
     cache.set(feed.id, entry);
-    return entry;
-  } finally {
     inflight.delete(feed.id);
-  }
+    return entry;
+  });
+  inflight.set(feed.id, landed);
+  return landed;
 }
 
 /** The feeds covering a view, nearest its centre first, at most MAX_FEEDS_PER_VIEW. */
@@ -165,8 +249,19 @@ export function coverage() {
   });
 }
 
+/**
+ * The keyed feeds this server is not reading, and what switches each on:
+ * which variable to set and where its free key is had. Never the key itself.
+ */
+export function feedsWaitingForKeys(env: Record<string, string | undefined> = process.env) {
+  return KEYED_TRANSIT_FEEDS
+    .filter(f => f.key && !env[f.key.env])
+    .map(f => ({ provider: f.provider, region: f.region, country: f.country, env: f.key!.env, signup: f.key!.signup }));
+}
+
 /** For tests: forget every cached read. */
 export function clearTransitCache(): void {
   cache.clear();
   inflight.clear();
+  history.clear();
 }

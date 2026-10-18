@@ -34,7 +34,75 @@ export interface TransitFeed {
   mdb?: string;
   /** How many vehicles the feed reported when the catalogue was built. */
   vehiclesAtProbe: number;
+  /** The body is a ZIP archive holding the FeedMessage (the UK's nationwide file). */
+  format?: 'zip';
+  /** How long one read is shared, when the feed is too big to read every 20 s. */
+  ttlMs?: number;
+  /**
+   * The feed needs a key. It is read from the server's environment and put
+   * where the operator expects it; without it the feed is left out entirely.
+   */
+  key?: TransitFeedKey;
+  /** The transit mode most of the fleet is, when the timetable does not say per route. */
+  defaultMode?: TransitMode;
 }
+
+export interface TransitFeedKey {
+  /** The environment variable holding it. */
+  env: string;
+  /** Sent in this request header... */
+  header?: string;
+  /** ...after this, e.g. "apikey " for Transport for NSW. */
+  prefix?: string;
+  /** ...or as this query parameter. */
+  query?: string;
+  /** Where a key is had, for the docs and the layer panel. */
+  signup: string;
+}
+
+export const TRANSIT_MODES = ['bus', 'tram', 'metro', 'rail', 'ferry', 'cable', 'unknown'] as const;
+export type TransitMode = (typeof TRANSIT_MODES)[number];
+
+/**
+ * GTFS route_type to mode. The basic types 0–12 and the extended (Hierarchical
+ * Vehicle Type) ranges both appear in the wild: 700s are buses, 900s trams and
+ * so on, so a range is read by its hundreds.
+ */
+export function modeForRouteType(type: number | undefined): TransitMode {
+  if (type === undefined || !Number.isFinite(type)) return 'unknown';
+  switch (type) {
+    case 0: return 'tram';
+    case 1: return 'metro';
+    case 2: return 'rail';
+    case 3: case 11: return 'bus';
+    case 4: return 'ferry';
+    case 5: case 6: case 7: return 'cable';
+    case 12: return 'rail';
+  }
+  const band = Math.floor(type / 100);
+  if (band === 1 || band === 3) return 'rail';
+  if (band === 2 || band === 7 || band === 8) return 'bus';
+  if (band === 4 || band === 5 || band === 6) return 'metro';
+  if (band === 9) return 'tram';
+  if (band === 10 || band === 12) return 'ferry';
+  if (band === 13 || band === 14) return 'cable';
+  return 'unknown';
+}
+
+/** One colour per mode, chosen to stay apart from flights, ships and cameras. */
+export const TRANSIT_MODE_COLORS: Record<TransitMode, string> = {
+  bus: '#5EEAD4',
+  tram: '#FBBF24',
+  metro: '#F87171',
+  rail: '#C4B5FD',
+  ferry: '#7DD3FC',
+  cable: '#F9A8D4',
+  unknown: '#CBD5E1',
+};
+
+export const TRANSIT_MODE_WORDS: Record<TransitMode, string> = {
+  bus: 'Bus', tram: 'Tram', metro: 'Metro', rail: 'Train', ferry: 'Ferry', cable: 'Cable car', unknown: 'Transit vehicle',
+};
 
 /** One vehicle, as /api/transit sends it. */
 export interface TransitVehicle {
@@ -47,13 +115,23 @@ export interface TransitVehicle {
   b?: number;
   /** Speed, m/s. */
   s?: number;
+  /** The route as the feed identifies it; often an internal key. */
   route?: string;
+  /** The route as riders know it ("39", "Red Line"), from the operator's timetable. */
+  name?: string;
+  /** From the route's type in the timetable, else the feed's usual mode. */
+  mode?: TransitMode;
   label?: string;
   trip?: string;
   /** Position time, seconds since the epoch. */
   t?: number;
   /** GTFS-Realtime OccupancyStatus. */
   occ?: number;
+  /**
+   * Its fixes before this one in the same trip, [time s, lat, lng], oldest
+   * first: kept by the server so a map can play it back from the first poll.
+   */
+  h?: [number, number, number][];
 }
 
 /** Feed metadata the map shows in a vehicle's popup. */

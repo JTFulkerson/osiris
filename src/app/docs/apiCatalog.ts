@@ -321,13 +321,14 @@ export const API_GROUPS: ApiGroup[] = [
       {
         path: '/api/transit',
         method: 'GET',
-        summary: 'Live buses and other transit vehicles, from operators’ own GTFS-Realtime feeds. Keyless.',
+        summary: 'Live buses, trams, metros, trains and ferries, from operators’ own GTFS-Realtime feeds. Keyless; free keys add more cities.',
         params: [
           { name: 'bbox', desc: 'west,south,east,north in degrees: every vehicle in the box.', example: '-71.2,42.25,-70.95,42.45' },
-          { name: 'coverage', desc: 'Set to 1 for where there are feeds instead: one entry per feed, with its area and fleet size.', example: '1' },
+          { name: 'coverage', desc: 'Set to 1 for where there are feeds instead: one entry per feed, with its area and fleet size, and the operators a free key would add.', example: '1' },
         ],
         returns: ['vehicles', 'feeds', 'skippedFeeds', 'truncated', 'total', 'timestamp'],
-        notes: 'Each vehicle carries its feed id `f`, `lat`, `lng`, and where the feed gives them `route`, `label`, `trip`, bearing `b` (degrees), speed `s` (m/s), position time `t` (epoch seconds) and occupancy `occ`. Feeds are read only for the area asked about and shared between callers for 20 s; up to 40 feeds are read per box, nearest its centre first. Positions older than 15 minutes are left out.',
+        env: ['TRANSIT_WMATA_KEY', 'TRANSIT_511_KEY', 'TRANSIT_TRIMET_KEY', 'TRANSIT_TRANSLINK_KEY', 'TRANSIT_STM_KEY', 'TRANSIT_NTA_KEY', 'TRANSIT_TRAFIKLAB_KEY', 'TRANSIT_TFNSW_KEY', 'TRANSIT_METLINK_KEY', 'TRANSIT_AT_KEY'],
+        notes: 'Each vehicle carries its feed id `f`, `lat`, `lng`, and where known `route` (the feed’s route id), `name` (the route as riders know it, from the operator’s timetable), `mode` (bus, tram, metro, rail, ferry, cable), `label`, `trip`, bearing `b` (degrees), speed `s` (m/s), position time `t` (epoch seconds) and occupancy `occ`. Feeds are read only for the area asked about and shared between callers for 20 s (30 s for Great Britain’s nationwide file); up to 40 feeds are read per box, nearest its centre first. Positions older than 15 minutes are left out. Every variable listed is optional and adds one operator.',
       },
       {
         path: '/api/arcgis',

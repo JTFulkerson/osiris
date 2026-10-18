@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { coverage, vehiclesIn } from '@/lib/transit-live';
+import { coverage, feedsWaitingForKeys, vehiclesIn } from '@/lib/transit-live';
 import { parseBBox } from '@/lib/transit';
 import { getClientIp, isRateLimited } from '@/lib/ssrf-guard';
 
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
   if (searchParams.get('coverage')) {
     const feeds = coverage();
     return NextResponse.json(
-      { feeds, total: feeds.length, timestamp: new Date().toISOString() },
+      { feeds, total: feeds.length, withKey: feedsWaitingForKeys(), timestamp: new Date().toISOString() },
       { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } },
     );
   }

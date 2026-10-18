@@ -205,10 +205,12 @@ export function decodeVehicleFeed(buf: Uint8Array): VehicleFeed {
       const lat = finite(p.lat), lng = finite(p.lng);
       if (lat === undefined || lng === undefined) return;
       if (Math.abs(lat) > 90 || Math.abs(lng) > 180 || (lat === 0 && lng === 0)) return;
+      // Some operators send -1 for "no heading"; only a real compass bearing is kept.
+      const bearing = finite(p.bearing);
       out.vehicles.push({
         id: clean(p.vehicleId) ?? entityId,
         lat, lng,
-        bearing: finite(p.bearing),
+        bearing: bearing !== undefined && bearing >= 0 && bearing <= 360 ? bearing : undefined,
         speed: finite(p.speed),
         routeId: clean(p.routeId),
         tripId: clean(p.tripId),
