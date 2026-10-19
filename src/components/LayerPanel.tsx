@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plane, Satellite, Sun, AlertTriangle, Camera,
-  CloudLightning, Ship, Network, Database, Ghost,
+  CloudLightning, CloudSun, Ship, Network, Database, Ghost,
   Flame, Tv, Radio, Mountain, Anchor, Megaphone, SlidersHorizontal
 } from 'lucide-react';
 import StyleStudio from './StyleStudio';
@@ -51,11 +51,10 @@ interface LayerGroupDef {
 
 const LAYER_GROUPS: LayerGroupDef[] = [
   {
-    label: 'SDK',
-    fullLabel: 'OSIRIS SDK',
-    icon: Network,
+    label: 'WEATHER',
+    fullLabel: 'WEATHER',
+    icon: CloudSun,
     layers: [
-      { key: 'sdk_sea', label: 'Maritime Lines', dataKey: 'sdk_entities' },
       { key: 'live_clouds', label: 'Live Clouds', description: 'NOAA satellites · lit in 3D · hourly', dataKey: '' },
       { key: 'wind', label: 'Wind', description: 'NOAA GFS · surface wind · 6-hourly', dataKey: '' },
       { key: 'wind_controls', label: 'Time Controls', description: '3 days back · 5 ahead', dataKey: '', parent: 'wind' },
@@ -80,6 +79,7 @@ const LAYER_GROUPS: LayerGroupDef[] = [
     icon: Ship,
     layers: [
       { key: 'maritime', label: 'Maritime / Naval', dataKey: 'maritime_ships,maritime_ports,maritime_chokepoints' },
+      { key: 'sdk_sea', label: 'Maritime Lines', dataKey: 'sdk_entities' },
     ],
   },
   {
