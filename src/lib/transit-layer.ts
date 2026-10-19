@@ -43,6 +43,8 @@ export interface TransitLayerOptions {
    */
   openPopup: (lngLat: [number, number], html: string, anchor?: PositionAnchor) => Popup;
   onStatus?: (status: TransitStatus) => void;
+  /** The map's layers that have click handlers of their own: a click on one of them is not a vehicle's. */
+  clickableLayers?: ReadonlySet<string>;
 }
 
 const SRC_LABELS = 'transit-labels';
@@ -346,11 +348,12 @@ export function attachTransit(map: MlMap, opts: TransitLayerOptions): () => void
     return room >= (anchor === 'top' || anchor === 'bottom' ? CARD_H : CARD_W) ? anchor : undefined;
   };
 
-  const otherLayerHere = (ev: MapMouseEvent) =>
-    map.queryRenderedFeatures(ev.point).some(f => {
-      const src = map.getSource(f.source);
-      return src?.type === 'geojson' && !OWN_SOURCES.has(f.source);
-    });
+  // Only layers that take clicks themselves count. Any GeoJSON feature used to:
+  // the night shade is one, so wherever it was night no vehicle could be clicked.
+  const otherLayerHere = (ev: MapMouseEvent) => {
+    const layers = [...(opts.clickableLayers ?? [])].filter(id => !TRANSIT_LAYER_IDS.includes(id) && map.getLayer(id));
+    return layers.length > 0 && map.queryRenderedFeatures(ev.point, { layers }).length > 0;
+  };
 
   const onClick = (ev: MapMouseEvent) => {
     if (map.getZoom() < TRANSIT_VEHICLE_ZOOM || !drawnKeys.length || otherLayerHere(ev)) return;

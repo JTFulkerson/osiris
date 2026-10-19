@@ -40,6 +40,18 @@ interface SatelliteRow {
 }
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+/**
+ * Layers with their own click handlers. The satellite pick and the transit
+ * vehicles defer to these, and to nothing else: the basemap, the night shade
+ * and other fills are not click targets.
+ */
+const CLICKABLE_LAYERS: ReadonlySet<string> = new Set(['conflict-icons','cctv-dots','eq-circles','fires-heat',
+  'gdelt-dots','weather-dots','infra-dots','maritime-dots','choke-dots','news-dots',
+  'balloon-dots','rad-dots','ship-dots','sweep-device-dots','scan-targets-dots',
+  'sdk-sea','sdk-air','sdk-intel','malware-dots','cyber-heads','gdelt-events-dots',
+  'cf-outage-dots','cf-attack-dots','flight-dots','military-dots','jet-dots','private-dots','alert-pin-dots',
+  'transit-coverage-dots']);
+
 interface OsirisMapProps {
   data: any;
   activeLayers: Record<string, boolean>;
@@ -1156,14 +1168,6 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
     });
 
     // ── Satellites (SatNOGS powered) ──
-    // Layers with their own click handlers. The satellite pick defers to
-    // these, and to nothing else — the basemap is not a click target.
-    const CLICKABLE_LAYERS = new Set(['conflict-icons','cctv-dots','eq-circles','fires-heat',
-      'gdelt-dots','weather-dots','infra-dots','maritime-dots','choke-dots','news-dots',
-      'balloon-dots','rad-dots','ship-dots','sweep-device-dots','scan-targets-dots',
-      'sdk-sea','sdk-air','sdk-intel','malware-dots','cyber-heads','gdelt-events-dots',
-      'cf-outage-dots','cf-attack-dots','flight-dots','military-dots','jet-dots','private-dots','alert-pin-dots',
-      'transit-coverage-dots']);
 
     // Satellites are picked on the GPU: the pick pass runs the same vertex
     // shader as the visible one, so the target is always exactly where the
@@ -3385,6 +3389,7 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
         return popupRef.current;
       },
       onStatus: status => onTransitStatusRef.current?.(status),
+      clickableLayers: CLICKABLE_LAYERS,
     });
     return () => {
       detach();
