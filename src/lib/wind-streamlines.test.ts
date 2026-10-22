@@ -203,12 +203,12 @@ describe('createWindBaker', () => {
 });
 
 describe('detail levels', () => {
-  it('halve the spacing with each level, and come in a zoom step at a time from zoom 4', () => {
+  it('halve the spacing with each level, and come in a zoom step at a time from zoom 4.5', () => {
     expect(windSpacing(7200, 1)).toBeCloseTo(windSpacing(7200) / 2, 10);
     expect(windSpacing(1800)).toBeCloseTo(windSpacing(7200) * 2, 10);
     expect(windLevel(1.5)).toBe(0);
-    expect(windLevel(3.99)).toBe(0);
-    expect(windLevel(4)).toBe(1);
+    expect(windLevel(4.49)).toBe(0);
+    expect(windLevel(4.5)).toBe(1);
     expect(windLevel(7.5)).toBe(4);
     expect(windLevel(18)).toBe(WIND_MAX_LEVEL);
   });
