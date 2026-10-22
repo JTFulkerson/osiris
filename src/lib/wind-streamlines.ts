@@ -32,10 +32,14 @@ export const WIND_PATH_STEPS = 16;
 export const WIND_STEP_SECONDS = 1800;
 /** Floats per vertex: mercator x, mercator y, how far along its curve (0..1), the curve's phase. */
 export const WIND_STRIDE = 4;
-/** The finest detail level, for zoom 12: past that the streamlines have faded out (windHeightFade). */
+/** The finest detail level, for zoom 12.5: by then the streamlines have faded out (windHeightFade). */
 export const WIND_MAX_LEVEL = 9;
-/** Zoom up to which the globe's own set is drawn; each zoom step past it is one detail level. */
-const LEVEL_ZOOM = 3;
+/**
+ * The globe's own set is drawn up to a zoom step past this, and each step
+ * after is one more detail level. Half a step on, so a zoomed-in view looks
+ * like the globe's set between zoom 3.5 and 4.5, its curves long and well apart.
+ */
+const LEVEL_ZOOM = 3.5;
 
 const DEGREE_METERS = 111320;
 /** Below this the air is called still, and a curve stops. */
@@ -87,9 +91,9 @@ export function windSpacing(count: number, level = 0): number {
   return (SPACING_SHARE * Math.sqrt(SEED_AREA / Math.max(1, count))) / 2 ** level;
 }
 
-/** The detail level for a zoom: 0, the globe's own set, up to zoom 4, then one more for each zoom step. */
+/** The detail level for a zoom: 0, the globe's own set, below zoom 4.5, then one more for each zoom step. */
 export function windLevel(zoom: number): number {
-  return Math.max(0, Math.min(WIND_MAX_LEVEL, Math.floor(zoom) - LEVEL_ZOOM));
+  return Math.max(0, Math.min(WIND_MAX_LEVEL, Math.floor(zoom - LEVEL_ZOOM)));
 }
 
 /** About how many seeds a set tries in `bounds` at this spacing. */
