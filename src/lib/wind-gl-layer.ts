@@ -75,7 +75,8 @@ out float v_facing;
 float windFacing(vec2 merc) {
 #ifdef GLOBE
   vec4 plane = u_projection_clipping_plane;
-  if (plane.w > -1e-6 || u_projection_transition < 0.999) return 1.0;
+  // Kept while the globe flattens into the map (zoom 11 to 12): the far side still shows through it then.
+  if (plane.w > -1e-6) return 1.0;
   // The horizon plane is (unit normal toward the camera, -1 / camera distance): the camera, in Earth radii.
   vec3 cam = plane.xyz * (-1.0 / plane.w);
   vec3 p = projectToSphere(merc, merc);
