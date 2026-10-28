@@ -43,6 +43,7 @@ import { fetchNevadaCameras } from './nevada';
 import { fetchLouisianaCameras } from './louisiana';
 import { fetchFloridaCameras } from './florida';
 import { fetchGeorgiaCameras } from './georgia';
+import { fetchSouthCarolinaCameras } from './southcarolina';
 import { fetchNorthCarolinaCameras } from './northcarolina';
 import { fetchArizonaCameras } from './arizona';
 import { fetchTexasCameras } from './texas';
@@ -477,6 +478,7 @@ const RAW_REGION_FETCHERS: Record<string, RegionFetcher> = {
   'louisiana': fetchLouisianaCameras,
   'florida': fetchFloridaCameras,
   'georgia': fetchGeorgiaCameras,
+  'southcarolina': fetchSouthCarolinaCameras,
   'northcarolina': fetchNorthCarolinaCameras,
   'arizona': fetchArizonaCameras,
   'texas': fetchTexasCameras,
@@ -794,6 +796,8 @@ function getRegionsForBounds(lat: number, lng: number, radius: number): string[]
      us-central boxes cover the latitudes but carry none of these agencies. */
   if (lat > 24.4 && lat < 31.1 && lng > -87.7 && lng < -79.9) regions.push('florida');
   if (lat > 30.3 && lat < 35.1 && lng > -85.7 && lng < -80.8) regions.push('georgia');
+  // South Carolina (SCDOT 511) — an Iteris build rather than IBI, but listed here with its neighbours
+  if (lat > 31.9 && lat < 35.3 && lng > -83.5 && lng < -78.4) regions.push('southcarolina');
   if (lat > 33.8 && lat < 36.6 && lng > -84.4 && lng < -75.4) regions.push('northcarolina');
   // Delaware (DelDOT) — explicit, since us-east covers the latitudes but carries none of its cameras
   if (lat > 38.4 && lat < 39.9 && lng > -75.85 && lng < -74.95) regions.push('delaware');
