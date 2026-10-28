@@ -45,6 +45,7 @@ import { fetchFloridaCameras } from './florida';
 import { fetchGeorgiaCameras } from './georgia';
 import { fetchNorthCarolinaCameras } from './northcarolina';
 import { fetchArizonaCameras } from './arizona';
+import { fetchMarylandCameras } from './maryland';
 import { fetchTexasCameras } from './texas';
 import { fetchDelawareCameras } from './delaware';
 import { fetchEastAsiaCameras, fetchSeAsiaCameras, fetchWestAsiaCameras } from './opencctv';
@@ -479,6 +480,7 @@ const RAW_REGION_FETCHERS: Record<string, RegionFetcher> = {
   'georgia': fetchGeorgiaCameras,
   'northcarolina': fetchNorthCarolinaCameras,
   'arizona': fetchArizonaCameras,
+  'maryland': fetchMarylandCameras,
   'texas': fetchTexasCameras,
   'delaware': fetchDelawareCameras,
   'eastasia': fetchEastAsiaCameras,
@@ -798,6 +800,8 @@ function getRegionsForBounds(lat: number, lng: number, radius: number): string[]
   // Delaware (DelDOT) — explicit, since us-east covers the latitudes but carries none of its cameras
   if (lat > 38.4 && lat < 39.9 && lng > -75.85 && lng < -74.95) regions.push('delaware');
   if (lat > 31.3 && lat < 37.1 && lng > -115.0 && lng < -109.0) regions.push('arizona');
+  // Maryland (MDOT SHA CHART) — explicit, since us-east covers the latitudes but carries none of its cameras
+  if (lat > 37.85 && lat < 39.8 && lng > -79.55 && lng < -74.95) regions.push('maryland');
   // Canada
   if (lat > 42 && lat < 70 && lng > -141 && lng < -52) regions.push('canada');
   if (lat > 53.3 && lat < 53.8 && lng > -114.0 && lng < -113.2) regions.push('edmonton');
